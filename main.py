@@ -1,7 +1,7 @@
 import pygame as pg
-import Bomb
-import Character
-import Level
+from Bomb import Bomb
+from Character import Character
+from Mlevel import Level
 
 if __name__ == '__main__':
     # initialize the pygame
