@@ -2,13 +2,15 @@ import pygame_menu as pgm
 
 class Menu:
 
-    def __init__(self, menuX, menuY):
+    def __init__(self, menuX, menuY, screen):
         self.menuX = menuX
         self.menuY = menuY
+        self.screen = screen
 
     def menu(self):
-        self.menuX = 0
-        self.menuY = 0
+        menu = pgm.Menu(self.menuX, self.menuY, 'Welcome', theme=pgm.themes.THEME_SOLARIZED)
+        menu.mainloop(self.screen)
+
 
     def playButton(self):
         pass

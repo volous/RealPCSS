@@ -7,11 +7,14 @@ from Mlevel import Level
 
 # initialize the pygame
 pg.init()
+
 # setting screen height, width and accessible size
 size = width, height = 900, 700
 bRadX, bRadY = 10, 10
 # create screen
 screen = pg.display.set_mode((width, height))
+# Initialize the pygame menu, comment out to work on game for now
+menu = Menu(height, width, screen)
 # instantiating Bomb class
 bomb_player_one = Bomb(bRadX, bRadY, True, 5, True)
 # instantiating Char class
@@ -21,7 +24,7 @@ level = Level(0, 0, 0, 0, screen)
 running = True
 # game loop-ish
 while running:
-
+    menu.menu()
     screen.fill((0, 0, 0))
     level.level()
     level.positional_grid()
