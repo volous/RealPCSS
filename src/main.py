@@ -9,9 +9,9 @@ from Mlevel import Level
 pg.init()
 # setting screen height, width and accessible size
 size = width, height = 900, 700
-bRadX, bRadY = 10, 10
 # create screen
 screen = pg.display.set_mode((width, height))
+bRadX, bRadY = 10, 10
 # instantiating Bomb class
 bomb_player_one = Bomb(bRadX, bRadY, True, 5, True)
 # instantiating Char class
