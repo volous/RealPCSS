@@ -1,4 +1,6 @@
 import pygame as pg
+import pygame_menu as pgm
+from Menu import Menu
 from Bomb import Bomb
 from Character import Character
 from Mlevel import Level
