@@ -1,22 +1,22 @@
 import pygame as pg
 import pygame_menu as pgm
-import threading
 from Menu import Menu
-from Bomb import Bomb
-from Character import Character
+
+import threading
+
 from Mlevel import Level
+from Character import Character
+from Bomb import Bomb
 
 # initialize the pygame
 pg.init()
 
 # setting screen height, width and accessible size
 size = width, height = 900, 700
-bRadX, bRadY = 10, 10
 # create screen
 screen = pg.display.set_mode((width, height))
-# Initialize the pygame menu, comment out to work on game for now
+# Initialize the pygame menu
 menu = Menu(height, width, screen)
-
 
 running = True
 # game loop-ish
