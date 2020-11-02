@@ -16,14 +16,21 @@ bRadX, bRadY = 10, 10
 screen = pg.display.set_mode((width, height))
 # Initialize the pygame menu, comment out to work on game for now
 menu = Menu(height, width, screen)
-
+# instantiating Bomb class
+bomb_player_one = Bomb(bRadX, bRadY, True, 5, True, screen)
+# instantiating Char class
+char1 = Character(249, 149, screen)
+level = Level(0, 0, 0, 0, screen)
 
 running = True
 # game loop-ish
 while running:
-    menu.menu()
+    # menu.menu()
     screen.fill((0, 0, 0))
-
+    level.level()
+    level.positional_grid()
+    level.impassible_blocks()
+    char1.draw_char()
     pg.time.delay(100)
 
     # timer is available from start, but when an event type of keydown on space, timer_start from bomb class is set
@@ -41,7 +48,7 @@ while running:
             # if key pressed is space the timer_start is set to true
             if event.key == pg.K_SPACE:
                 bomb_player_one.timer_start = True
-                bomb_player_one.bomb(screen)
+                bomb_player_one.bomb()
 
         trigger = pg.key.get_pressed()
 
