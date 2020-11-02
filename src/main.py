@@ -1,5 +1,6 @@
 import pygame as pg
 import pygame_menu as pgm
+import threading
 from Menu import Menu
 from Bomb import Bomb
 from Character import Character
@@ -24,7 +25,7 @@ level = Level(0, 0, 0, 0, screen)
 running = True
 # game loop-ish
 while running:
-    menu.menu()
+    # menu.menu()
     screen.fill((0, 0, 0))
     level.level()
     level.positional_grid()
@@ -71,6 +72,4 @@ while running:
             if event.key == pg.K_SPACE:
                 bomb_player_one.timer_start = True
                 bomb_player_one.bomb(screen)
-        if level.positional_array[0] + level.block_size is char1.posX is level.positional_array[0]:
-            print("hit")
     pg.display.update()
