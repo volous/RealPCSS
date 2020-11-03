@@ -1,0 +1,16 @@
+Index: src/main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame as pg\r\nimport pygame_menu as pgm\r\nfrom Menu import Menu\r\nfrom Bomb import Bomb\r\nfrom Character import Character\r\nfrom Mlevel import Level\r\n\r\n# initialize the pygame\r\npg.init()\r\n# setting screen height, width and accessible size\r\nsize = width, height = 900, 700\r\nbRadX, bRadY = 10, 10\r\n# create screen\r\nscreen = pg.display.set_mode((width, height))\r\n# instantiating Bomb class\r\nbomb_player_one = Bomb(bRadX, bRadY, True, 5, True)\r\n# instantiating Char class\r\nchar1 = Character(249, 149, screen)\r\nlevel = Level(0, 0, 0, 0, screen)\r\n\r\nrunning = True\r\n# game loop-ish\r\nwhile running:\r\n    screen.fill((0, 0, 0))\r\n    level.level()\r\n    level.positional_grid()\r\n    level.impassible_blocks()\r\n    char1.draw_char()\r\n    pg.time.delay(100)\r\n\r\n    # timer is available from start, but when an event type of keydown on space, timer_start from bomb class is set\r\n    # to true and begins countdown\r\n    bomb_player_one.timer()\r\n\r\n    # checks if there are events in the pygame window\r\n    for event in pg.event.get():\r\n        # if the window closes, it gets closed properly\r\n        if event.type == pg.QUIT:\r\n            running = False\r\n        # if a key is pressed down event is triggered\r\n        if event.type == pg.KEYDOWN:\r\n            # if key pressed is space the timer_start is set to true\r\n            if event.key == pg.K_SPACE:\r\n                bomb_player_one.timer_start = True\r\n                bomb_player_one.bomb(screen)\r\n\r\n        trigger = pg.key.get_pressed()\r\n\r\n        if trigger[pg.K_w] and char1.posY > char1.vel:\r\n            char1.posY -= char1.vel\r\n        if trigger[pg.K_s] and char1.posY + char1.vel + char1.height < height:\r\n            char1.posY += char1.vel\r\n\r\n        if trigger[pg.K_a] and char1.posX > char1.vel:\r\n            char1.posX -= char1.vel\r\n\r\n        if trigger[pg.K_d] and char1.posX + char1.vel + char1.width < width:\r\n            char1.posX += char1.vel\r\n\r\n        # if the window closes, it gets closed properly\r\n        if event.type == pg.QUIT:\r\n            running = False\r\n        # if a key is pressed down event is triggered\r\n        if event.type == pg.KEYDOWN:\r\n            # if key pressed is space the timer_start is set to true\r\n            if event.key == pg.K_SPACE:\r\n                bomb_player_one.timer_start = True\r\n                bomb_player_one.bomb(screen)\r\n        if level.positional_array[0] + level.block_size is char1.posX is level.positional_array[0]:\r\n            print(\"hit\")\r\n    pg.display.update()\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main.py	(revision 6823c85e7878f1f60c23664f69df157dafa10571)
++++ src/main.py	(date 1604135982844)
+@@ -66,6 +66,4 @@
+             if event.key == pg.K_SPACE:
+                 bomb_player_one.timer_start = True
+                 bomb_player_one.bomb(screen)
+-        if level.positional_array[0] + level.block_size is char1.posX is level.positional_array[0]:
+-            print("hit")
+     pg.display.update()

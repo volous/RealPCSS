@@ -1,0 +1,69 @@
+Index: src/main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame as pg\r\nimport pygame_menu as pgm\r\nfrom Menu import Menu\r\nfrom Bomb import Bomb\r\nfrom Character import Character\r\nfrom Mlevel import Level\r\n\r\n# initialize the pygame\r\npg.init()\r\n# setting screen height, width and accessible size\r\nsize = width, height = 900, 700\r\nbRadX, bRadY = 10, 10\r\n# create screen\r\nscreen = pg.display.set_mode((width, height))\r\n# instantiating Bomb class\r\nbomb_player_one = Bomb(bRadX, bRadY, True, 5, True)\r\n# instantiating Char class\r\nchar1 = Character(249, 149, screen)\r\nlevel = Level(0, 0, 0, 0, screen)\r\n\r\nrunning = True\r\n# game loop-ish\r\nwhile running:\r\n\r\n    screen.fill((0, 0, 0))\r\n    level.level()\r\n    level.positional_grid()\r\n    level.impassible_blocks()\r\n    char1.draw_char()\r\n    pg.time.delay(100)\r\n\r\n    # timer is available from start, but when an event type of keydown on space, timer_start from bomb class is set\r\n    # to true and begins countdown\r\n    bomb_player_one.timer()\r\n\r\n    # checks if there are events in the pygame window\r\n    for event in pg.event.get():\r\n\r\n        # if the window closes, it gets closed properly\r\n        if event.type == pg.QUIT:\r\n            running = False\r\n        # if a key is pressed down event is triggered\r\n        if event.type == pg.KEYDOWN:\r\n            # if key pressed is space the timer_start is set to true\r\n            if event.key == pg.K_SPACE:\r\n                bomb_player_one.timer_start = True\r\n                bomb_player_one.bomb(screen)\r\n\r\n        trigger = pg.key.get_pressed()\r\n\r\n    if trigger[pg.K_w] and char1.posY > char1.vel:\r\n        char1.posY -= char1.vel\r\n    if trigger[pg.K_s] and char1.posY + char1.vel + char1.height < height:\r\n        char1.posY += char1.vel\r\n\r\n    if trigger[pg.K_a] and char1.posX > char1.vel:\r\n        char1.posX -= char1.vel\r\n\r\n    if trigger[pg.K_d] and char1.posX + char1.vel + char1.width < width:\r\n        char1.posX += char1.vel\r\n\r\n        # if the window closes, it gets closed properly\r\n        if event.type == pg.QUIT:\r\n            running = False\r\n        # if a key is pressed down event is triggered\r\n        if event.type == pg.KEYDOWN:\r\n            # if key pressed is space the timer_start is set to true\r\n            if event.key == pg.K_SPACE:\r\n                bomb_player_one.timer_start = True\r\n                bomb_player_one.bomb(screen)\r\n        if level.positional_array[0] + level.block_size is char1.posX is level.positional_array[0]:\r\n            print(\"hit\")\r\n    pg.display.update()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main.py	(revision 8ae03760c19c213365778745ae2299725238e9fe)
++++ src/main.py	(date 1604136707062)
+@@ -1,5 +1,6 @@
+ import pygame as pg
+ import pygame_menu as pgm
++import threading
+ from Menu import Menu
+ from Bomb import Bomb
+ from Character import Character
+@@ -68,6 +69,4 @@
+             if event.key == pg.K_SPACE:
+                 bomb_player_one.timer_start = True
+                 bomb_player_one.bomb(screen)
+-        if level.positional_array[0] + level.block_size is char1.posX is level.positional_array[0]:
+-            print("hit")
+     pg.display.update()
+\ No newline at end of file
+Index: src/Mlevel.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame as pg\r\nimport numpy as np\r\n\r\nclass Level:\r\n\r\n    def __init__(self, sizeX, sizeY, posX, posY, screen):\r\n        self.sizeX = sizeX\r\n        self.sizeY = sizeY\r\n        self.posX = posX\r\n        self.posY = posY\r\n        self.screen = screen\r\n        self.block_size = 32\r\n        self.hit = False\r\n        self.rect = None\r\n        self.rectX = 0\r\n        self.rectY = 0\r\n        self.im_recX = 0\r\n        self.im_recY = 0\r\n        self.positional_array = []\r\n        self.im_rect_array = []\r\n        self.im_rect_hor_array = []\r\n        self.im_rect_ver_array = []\r\n\r\n    # level\r\n    def level(self):\r\n        # assigning a color\r\n        white = (255, 255, 255)\r\n        pg.draw.rect(self.screen, white, (217, 117, 480, 480))\r\n\r\n    # position grid\r\n    def positional_grid(self):\r\n        # assigning a color for the rectangles\r\n        black = (0, 0, 0)\r\n        blue = (0, 0, 255)\r\n        # setting the size of the rectangles\r\n        block_size = self.block_size\r\n        # setting the map_size\r\n        map_size = 15\r\n        # adding a 2D array to store the rectangles\r\n        self.positional_array_bomb = np.ndarray([map_size, map_size], dtype=pg.Rect)\r\n        # for loop that, creates a grid from start of level edge to the end\r\n        for i in range(0, map_size):\r\n           for j in range(0, map_size):\r\n                self.rectX = 217 + i * block_size\r\n                self.rectY = 117 + j * block_size\r\n                # assigning a pygame function that draws a rectangle\r\n                self.rect = pg.Rect(self.rectX, self.rectY, block_size, block_size)\r\n                self.positional_array.append(self.rectX)\r\n                self.positional_array_bomb[i, j] = [(self.rect.x + 16), (self.rect.y + 16)]\r\n                # pg.draw.line(self.screen, blue, self.rect, 1)\r\n                # using methods from pygame to draw a rectangle on the src screen,\r\n                pg.draw.rect(self.screen, black, self.rect, 1)\r\n                # print(self.positional_array[0])\r\n    def impassible_blocks(self):\r\n        grey = (125, 125, 125)\r\n        distance = 64\r\n        block_size = self.block_size\r\n        for i in range(0, 6):\r\n            for j in range(0, 6):\r\n                self.im_recX = 281 + i * distance\r\n                self.im_recY = 181 + j * distance\r\n                rect = pg.Rect(self.im_recX, self.im_recY, block_size, block_size)\r\n                self.im_rect_array.append(rect.x)\r\n                pg.draw.rect(self.screen, grey, rect, 0)\r\n\r\n        for i in range(0, 15):\r\n            for j in range(0, 15):\r\n                wall_rect_vert = pg.Rect(217 + i * block_size, 117 + j * 448, block_size, block_size)\r\n                self.im_rect_ver_array.append(wall_rect_vert)\r\n                pg.draw.rect(self.screen, grey, wall_rect_vert, 0)\r\n                wall_rect_hori = pg.Rect(217 + i * 448, 117 + j * block_size, block_size, block_size)\r\n                self.im_rect_hor_array.append(wall_rect_hori)\r\n                pg.draw.rect(self.screen, grey, wall_rect_hori)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Mlevel.py	(revision 8ae03760c19c213365778745ae2299725238e9fe)
++++ src/Mlevel.py	(date 1604139125700)
+@@ -18,8 +18,6 @@
+         self.im_recY = 0
+         self.positional_array = []
+         self.im_rect_array = []
+-        self.im_rect_hor_array = []
+-        self.im_rect_ver_array = []
+ 
+     # level
+     def level(self):
+@@ -31,7 +29,6 @@
+     def positional_grid(self):
+         # assigning a color for the rectangles
+         black = (0, 0, 0)
+-        blue = (0, 0, 255)
+         # setting the size of the rectangles
+         block_size = self.block_size
+         # setting the map_size
+@@ -60,14 +57,14 @@
+                 self.im_recX = 281 + i * distance
+                 self.im_recY = 181 + j * distance
+                 rect = pg.Rect(self.im_recX, self.im_recY, block_size, block_size)
+-                self.im_rect_array.append(rect.x)
++                self.im_rect_array.append(rect)
+                 pg.draw.rect(self.screen, grey, rect, 0)
+ 
+         for i in range(0, 15):
+             for j in range(0, 15):
+                 wall_rect_vert = pg.Rect(217 + i * block_size, 117 + j * 448, block_size, block_size)
+-                self.im_rect_ver_array.append(wall_rect_vert)
++                self.im_rect_array.append(wall_rect_vert)
+                 pg.draw.rect(self.screen, grey, wall_rect_vert, 0)
+                 wall_rect_hori = pg.Rect(217 + i * 448, 117 + j * block_size, block_size, block_size)
+-                self.im_rect_hor_array.append(wall_rect_hori)
++                self.im_rect_array.append(wall_rect_hori)
+                 pg.draw.rect(self.screen, grey, wall_rect_hori)
+\ No newline at end of file
