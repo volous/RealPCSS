@@ -34,6 +34,4 @@ while running:
             running = False
     menu.menu()
     menu.playButton()
-
-    
     pg.display.update()
