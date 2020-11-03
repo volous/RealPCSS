@@ -7,13 +7,12 @@ from Mlevel import Level
 
 
 class Menu:
-
-    def __init__(self, menuX, menuY, screen):
-        self.menuX = menuX
-        self.menuY = menuY
+    def __init__(self, menuW, menuH, screen):
+        self.menuW = menuW
+        self.menuH = menuH
         self.screen = screen
 
-        self.menu_draw = pgm.Menu(self.menuX, self.menuY, 'Welcome', theme=pgm.themes.THEME_SOLARIZED)
+        self.menu_draw = pgm.Menu(self.menuW, self.menuH, 'Welcome', theme=pgm.themes.THEME_SOLARIZED)
         self.bomb_player_one = Bomb(10, 10, True, 5, True, screen)
         self.char1 = Character(249, 149, screen)
         self.level = Level(0, 0, 0, 0, screen)
