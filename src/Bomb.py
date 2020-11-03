@@ -1,13 +1,16 @@
 import time
+
 import pygame as pg
 
 
 class Bomb:
 
     # bRad is blastRadius
-    def __init__(self, bRadX, bRadY, bState, bReload, screen):
+    def __init__(self, bRadX, bRadY, pPosX, pPosY, bState, bReload, screen):
         self.bRadX = bRadX
         self.bRadY = bRadY
+        self.pPosX = pPosX
+        self.pPosY = pPosY
         self.bState = bState
         self.bReload = bReload
         self.bomb_state_one = pg.image.load("Res/bomb1.png")
@@ -26,17 +29,10 @@ class Bomb:
 
 
     def bomb(self):
-        # sets secs to be equal to bSecs
-        print("boom")
-
-    # timer method
-    def timer(self):
-        while True:
-            for event in pg.event.get():
-                if event.type == pg.KEYDOWN:
-                    if pg.KEYDOWN == pg.K_SPACE:
-                        self.start_ticks
-                        print(self.start_ticks)
-                        self.ticks += 1
-                        print(self.ticks)
+        for event in pg.event.get():
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_SPACE:
+                    # self.screen.blit(self.bomb_state[0], (self.pPosX, self.pPosY))
+                    self.rect = pg.Rect((self.pPosX, self.pPosY, 32, 32))
+                    pg.draw.rect(self.screen, (255, 0, 0), self.rect)
 
