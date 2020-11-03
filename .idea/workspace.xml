@@ -19,11 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eaaade4f-c741-412a-b6f2-0656fec11084" name="Default Changelist" comment="pressing play starts the game">
-      <change beforePath="$PROJECT_DIR$/src/Bomb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bomb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="eaaade4f-c741-412a-b6f2-0656fec11084" name="Default Changelist" comment="pressing play starts the game" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -118,7 +114,7 @@
       <option name="presentableId" value="Default" />
       <updated>1604133932735</updated>
       <workItem from="1604133933839" duration="8354000" />
-      <workItem from="1604306338366" duration="8349000" />
+      <workItem from="1604306338366" duration="8624000" />
     </task>
     <task id="LOCAL-00001" summary="Everythin moved over">
       <created>1604134409837</created>
@@ -197,30 +193,30 @@
     <option name="LAST_COMMIT_MESSAGE" value="pressing play starts the game" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1604313669919">
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1604387695965">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1493" height="223" key="GridCell.Tab.0.bottom/-1920.-8.1920.1080/0.0.1536.864@0.0.1536.864" timestamp="1604151097472" />
     <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864/-1920.1.1920.1080@0.0.1536.864" timestamp="1604136210736" />
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1604313669919" />
-    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1604313669919">
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1604387695965" />
+    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1604387695965">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1493" height="223" key="GridCell.Tab.0.center/-1920.-8.1920.1080/0.0.1536.864@0.0.1536.864" timestamp="1604151097472" />
     <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864/-1920.1.1920.1080@0.0.1536.864" timestamp="1604136210736" />
-    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1604313669919" />
-    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1604313669919">
+    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1604387695965" />
+    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1604387695965">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1493" height="223" key="GridCell.Tab.0.left/-1920.-8.1920.1080/0.0.1536.864@0.0.1536.864" timestamp="1604151097472" />
     <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864/-1920.1.1920.1080@0.0.1536.864" timestamp="1604136210736" />
-    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1604313669919" />
-    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1604313669919">
+    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1604387695965" />
+    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1604387695965">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1493" height="223" key="GridCell.Tab.0.right/-1920.-8.1920.1080/0.0.1536.864@0.0.1536.864" timestamp="1604151097472" />
     <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864/-1920.1.1920.1080@0.0.1536.864" timestamp="1604136210736" />
-    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1604313669919" />
+    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1604387695965" />
     <state x="147" y="69" key="MergeDialog" timestamp="1604136031199">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -239,12 +235,12 @@
     </state>
     <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864/-1920.1.1920.1080@0.0.1536.864" timestamp="1604136039002" />
     <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1604311674866" />
-    <state x="586" y="346" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604308152472">
+    <state x="586" y="346" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604387449668">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="586" y="346" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.-8.1920.1080/0.0.1536.864@0.0.1536.864" timestamp="1604139125685" />
     <state x="586" y="346" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.864/-1920.1.1920.1080@0.0.1536.864" timestamp="1604135526364" />
-    <state x="586" y="346" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.864@0.0.1536.864" timestamp="1604308152472" />
+    <state x="586" y="346" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.864@0.0.1536.864" timestamp="1604387449668" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/RealPCSS$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1604313669914" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
