@@ -18,10 +18,14 @@ screen = pg.display.set_mode((width, height))
 # Initialize the pygame menu
 menu = Menu(height, width, screen)
 
+#Initialize char
+char1 = Character(int(width / 2), int(height / 2))
+
 running = True
 # game loop-ish
 while running:
     menu.menu()
+    # menu.playButton()
     pg.time.delay(100)
 
     # checks if there are events in the pygame window
@@ -30,7 +34,7 @@ while running:
         # if the window closes, it gets closed properly
         if event.type == pg.QUIT:
             running = False
-
-        trigger = pg.key.get_pressed()
-
+    char1.player_movement()
+    
+    char1.draw_char()
     pg.display.update()
