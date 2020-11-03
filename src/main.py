@@ -22,6 +22,7 @@ running = True
 # game loop-ish
 while running:
     menu.menu()
+    # menu.playButton()
     pg.time.delay(100)
 
     # checks if there are events in the pygame window
@@ -30,7 +31,5 @@ while running:
         # if the window closes, it gets closed properly
         if event.type == pg.QUIT:
             running = False
-
-        trigger = pg.key.get_pressed()
 
     pg.display.update()
