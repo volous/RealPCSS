@@ -35,7 +35,7 @@ class Menu:
         self.level.impassible_blocks()
         self.char1.player_movement()
         self.char1.draw_char()
-        self.bomb_player_one.bomb()
+        self.bomb_player_one.bomb(self.char1.posX, self.char1.posY)
 
     def itemShop(self):
         pass
