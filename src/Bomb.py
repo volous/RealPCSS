@@ -40,7 +40,16 @@ class Bomb:
         self.newY = 0
         trigger = pg.key.get_pressed()
         print(self.secs)
-        for
+        if trigger[pg.K_SPACE] and not self.placed:
+                self.placed = True
+                if self.placed:
+                    self.newX = self.bombX
+                    self.newY = self.bombY
+                    self.screen.blit(self.bomb_state[0], (self.newX, self.newY))
+                    self.timer()
+                    if self.secs == 0:
+                        self.placed = False
+                        # self.secs = 200
 
 
 
