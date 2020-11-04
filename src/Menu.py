@@ -14,9 +14,9 @@ class Menu:
         self.screen = screen
 
         self.menu_draw = pgm.Menu(self.menuX, self.menuY, 'Welcome', theme=pgm.themes.THEME_SOLARIZED)
-        self.bomb_player_one = Bomb(10, 10, 300, 300, True, True, screen)
         self.char1 = Character(249, 149, screen)
         self.level = Level(0, 0, 0, 0, screen)
+        self.bomb_player_one = Bomb(10, 10, self.char1.posX, self.char1.posY, True, True, screen)
 
     def menu(self):
         self.menu_draw.add_text_input('Name: ')
@@ -33,8 +33,7 @@ class Menu:
         self.level.impassible_blocks()
         self.char1.player_movement()
         self.char1.draw_char()
-        self.bomb_player_one.bomb()
-
+        self.bomb_player_one.bomb(self.char1.posX, self.char1.posY)
     def itemShop(self):
         pass
     def settings(self):

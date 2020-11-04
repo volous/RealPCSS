@@ -1,7 +1,7 @@
 import pygame as pg
 import numpy as np
-
-
+from Bomb import Bomb
+from Character import Character
 class Level:
 
     def __init__(self, sizeX, sizeY, posX, posY, screen):
@@ -19,12 +19,23 @@ class Level:
         self.impassible_recY = 0
         self.positional_array = []
         self.impassible_rect_array = []
+        self.rect_array = []
+
+        self.char1 = Character(249, 149, screen)
+        self.bomb = Bomb(10, 10, self.char1.posX, self.char1.posY, True, True, screen)
 
     def level(self):
         # assigning a color
-        white = (255, 255, 255)
-        rect = pg.Rect(217, 117, 448, 448)
-        pg.draw.rect(self.screen, white, rect)
+        map_size = 15
+        for i in range(0, map_size):
+            for j in range(0, map_size):
+                self.rectX = 217 + i * self.block_size
+                self.rectY = 117 + j * self.block_size
+                white = (255, 255, 255)
+                rect = pg.Rect(self.rectX, self.rectY, self.block_size, self.block_size)
+                pg.draw.rect(self.screen, white, rect)
+                self.rect_array.append([i, j])
+
 
     def positional_grid(self):
         # assigning a color for the rectangles

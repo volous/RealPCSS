@@ -20,7 +20,6 @@ class Character:
 
     def player_movement(self):
         trigger = pg.key.get_pressed()
-
         if trigger[pg.K_w] and self.posY > self.vel:
             self.posY -= self.vel
         if trigger[pg.K_s] and self.posY + self.vel + self.height < height:

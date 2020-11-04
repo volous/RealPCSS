@@ -1,5 +1,5 @@
 import time
-
+import Menu as m
 import pygame as pg
 
 
@@ -21,18 +21,26 @@ class Bomb:
         pg.transform.scale(self.bomb_state_three, (32, 32))
         self.bomb_state = [self.bomb_state_one, self.bomb_state_two, self.bomb_state_three]
         self.screen = screen
+        self.placed = False
+        self.secs = 200
 
-        self.start_ticks = pg.time.get_ticks()
-        self.ticks = 0
+    def timer(self):
+        try:
+            while self.secs > 0:
+                self.secs -= 1
+        except:
+            print("timer fail")
 
 
 
+    def bomb(self, bombX, bombY):
+        self.bombX = bombX
+        self.bombY = bombY
+        self.newX = 0
+        self.newY = 0
+        trigger = pg.key.get_pressed()
+        print(self.secs)
+        for
 
-    def bomb(self):
-        for event in pg.event.get():
-            if event.type == pg.KEYDOWN:
-                if event.key == pg.K_SPACE:
-                    # self.screen.blit(self.bomb_state[0], (self.pPosX, self.pPosY))
-                    self.rect = pg.Rect((self.pPosX, self.pPosY, 32, 32))
-                    pg.draw.rect(self.screen, (255, 0, 0), self.rect)
+
 
