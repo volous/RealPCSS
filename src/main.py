@@ -1,23 +1,18 @@
 import pygame as pg
 import pygame_menu as pgm
 from Menu import Menu
+# import threading
 
-import threading
-
-from Mlevel import Level
-from Character import Character
-from Bomb import Bomb
-
-# initialize the pygame
+# Initialize the pygame
 pg.init()
 
-# setting screen height, width and accessible size
+# Setting screen height, width and accessible size
 size = width, height = 900, 700
-# create screen
-screen = pg.display.set_mode((width, height))
-# Initialize the pygame menu
-menu = Menu(height, width, screen)
+# Create surface
+surface = pg.display.set_mode((width, height))
+# Initialize the pygame menu, pgm.Menu() takes height before width
 
+<<<<<<< Updated upstream
 running = True
 # game loop-ish
 try:
@@ -36,3 +31,35 @@ try:
         pg.display.update()
 except:
     print("game did not run")
+=======
+pg.display.set_caption("Bomberman Spin-off Game")
+icon = pg.image.load('res/bomb3.png')
+pg.display.set_icon(icon)
+
+menu = Menu(height, width, surface)
+# Initialize character1
+# char1 = Character(int(width / 2), int(height / 2), screen)
+
+
+
+running = True
+# Game loop
+while running:
+
+    pg.time.delay(100)
+
+    # Checks if there are events in the pygame window
+    for event in pg.event.get():
+        # If the window closes, it gets closed properly
+        if event.type == pg.QUIT:
+            running = False
+
+    menu.mainMenu()
+    menu.playButton()
+    menu.itemShop()
+    menu.settings()
+    menu.exit()
+
+    # Updates the surface display
+    pg.display.update()
+>>>>>>> Stashed changes

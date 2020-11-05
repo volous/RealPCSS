@@ -13,11 +13,11 @@ class Bomb:
         self.pPosY = pPosY
         self.bState = bState
         self.bReload = bReload
-        self.bomb_state_one = pg.image.load("Res/bomb1.png")
+        self.bomb_state_one = pg.image.load("res/bomb1.png")
         pg.transform.scale(self.bomb_state_one, (32, 32))
-        self.bomb_state_two = pg.image.load("Res/bomb2.png")
+        self.bomb_state_two = pg.image.load("res/bomb2.png")
         pg.transform.scale(self.bomb_state_two, (32, 32))
-        self.bomb_state_three = pg.image.load("Res/bomb3.png")
+        self.bomb_state_three = pg.image.load("res/bomb3.png")
         pg.transform.scale(self.bomb_state_three, (32, 32))
         self.bomb_state = [self.bomb_state_one, self.bomb_state_two, self.bomb_state_three]
         self.screen = screen
