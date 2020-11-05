@@ -11,8 +11,8 @@ size = width, height = 900, 700
 # Create surface
 surface = pg.display.set_mode((width, height))
 # Initialize the pygame menu, pgm.Menu() takes height before width
+menu = Menu(height, width, surface)
 
-<<<<<<< Updated upstream
 running = True
 # game loop-ish
 try:
@@ -24,14 +24,14 @@ try:
             # if the window closes, it gets closed properly
             if event.type == pg.QUIT:
                 running = False
-        menu.menu()
+        menu.mainMenu()
         menu.playButton()
 
 
         pg.display.update()
 except:
     print("game did not run")
-=======
+
 pg.display.set_caption("Bomberman Spin-off Game")
 icon = pg.image.load('res/bomb3.png')
 pg.display.set_icon(icon)
@@ -62,4 +62,4 @@ while running:
 
     # Updates the surface display
     pg.display.update()
->>>>>>> Stashed changes
+
