@@ -49,7 +49,7 @@ class Menu:
 
     def draw_quitMenu(self):
         self.quitMenu.add_label("Are you sure?")
-        self.quitMenu.add_button("Yes", pg.quit())
+        self.quitMenu.add_button("Yes", pg.display.quit() and pg.quit())
         self.quitMenu.add_button("No", pgm.events.BACK)
         # Quits displaying on the surface
         pg.display.quit()

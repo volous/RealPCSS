@@ -25,7 +25,6 @@ menu.draw_mainMenu()
 # menu.draw_settingsMenu()
 # menu.draw_quitMenu()
 
-# Game loop
 running = True
 while running:
     menu.playButton()
