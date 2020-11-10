@@ -5,30 +5,42 @@ from Menu import Menu
 # initialize the pygame
 pg.init()
 
+# Set caption and icon
 pg.display.set_caption("Bomberman Spin-off Game")
 icon = pg.image.load('res/bomb3.png')
 pg.display.set_icon(icon)
 
 # Setting screen height, width and accessible size
 size = width, height = 900, 700
-# create screen
-screen = pg.display.set_mode((width, height))
-game_screen = pg.display.set_mode((width, height))
+# create surface
+surface = pg.display.set_mode((width, height))
+game_surface = pg.display.set_mode((width, height))
 # Initialize the pygame menu
-menu = Menu(height, width, screen, game_screen)
+menu = Menu(height, width, surface, game_surface)
 
-
+#Game loop
 running = True
-# game loop-ish
-menu.menu()
 while running:
+    menu.draw_background()
+    menu.draw_mainMenu()
+    menu.playButton()
+    # menu.draw_itemShopMenu()
+    # menu.draw_settingsMenu()
+    # menu.draw_quitMenu()
+
     pg.time.wait(100)
 
     # checks if there are events in the pygame window
-    for event in pg.event.get():
+    events = pg.event.get()
+    for event in events:
         # if the window closes, it gets closed properly
         if event.type == pg.QUIT:
             running = False
 
     pg.display.update()
-    menu.playButton()
+
+    if menu.mainMenu.is_enabled():
+        menu.mainMenu.update(events)
+        menu.mainMenu.draw(surface)
+        menu.mainMenu.mainloop(surface, bgfun=menu.draw_background)
+
