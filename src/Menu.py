@@ -43,7 +43,8 @@ class Menu:
         pass
 
     def settings(self):
-        self.mainMenu_draw.clear()
+        self.mainMenu_draw.disable()
+
 
 
 
