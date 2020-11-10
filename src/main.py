@@ -18,15 +18,16 @@ game_surface = pg.display.set_mode((width, height))
 # Initialize the pygame menu
 menu = Menu(height, width, surface, game_surface)
 
-#Game loop
+menu.draw_background()
+menu.draw_mainMenu()
+menu.draw_itemShopMenu()
+menu.draw_settingsMenu()
+menu.draw_quitMenu()
+
+# Game loop
 running = True
 while running:
-    menu.draw_background()
-    menu.draw_mainMenu()
     menu.playButton()
-    # menu.draw_itemShopMenu()
-    # menu.draw_settingsMenu()
-    # menu.draw_quitMenu()
 
     pg.time.wait(100)
 

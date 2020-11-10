@@ -17,12 +17,11 @@ class Menu:
         self.settingsMenu = pgm.Menu(600, 500, "Settings", theme=pgm.themes.THEME_SOLARIZED)
         self.quitMenu = pgm.Menu(200, 200, "Quit", theme=pgm.themes.THEME_SOLARIZED)
 
-
+        # Initialize level and characters
         self.level = Level(0, 0, 0, 0, self.game_surface)
         self.level.level()
         self.level.impassible_blocks()
         self.char1 = Character(1, 1, 249, 149, self.game_surface, self.level.walkable, (255, 0, 0))
-
 
     def draw_background(self):
         self.surface.fill((255, 255, 255))
