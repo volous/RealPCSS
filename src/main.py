@@ -1,12 +1,5 @@
 import pygame as pg
-import pygame_menu as pgm
 from Menu import Menu
-
-import threading
-
-from Mlevel import Level
-from Character import Character
-from Bomb import Bomb
 
 # initialize the pygame
 pg.init()
@@ -15,24 +8,22 @@ pg.init()
 size = width, height = 900, 700
 # create screen
 screen = pg.display.set_mode((width, height))
+game_screen = pg.display.set_mode((width, height))
 # Initialize the pygame menu
-menu = Menu(height, width, screen)
+menu = Menu(height, width, screen, game_screen)
+
 
 running = True
 # game loop-ish
-try:
-    while running:
-        pg.time.delay(100)
+menu.menu()
+while running:
+    pg.time.wait(100)
 
-        # checks if there are events in the pygame window
-        for event in pg.event.get():
-            # if the window closes, it gets closed properly
-            if event.type == pg.QUIT:
-                running = False
-        menu.menu()
-        menu.playButton()
+    # checks if there are events in the pygame window
+    for event in pg.event.get():
+        # if the window closes, it gets closed properly
+        if event.type == pg.QUIT:
+            running = False
 
-
-        pg.display.update()
-except:
-    print("game did not run")
+    pg.display.update()
+    menu.playButton()

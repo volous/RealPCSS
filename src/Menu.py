@@ -1,23 +1,21 @@
-import pygame as pg
 import pygame_menu as pgm
-import threading
-from Bomb import Bomb
 from Character import Character
 from Mlevel import Level
 
 
 class Menu:
 
-    def __init__(self, menuW, menuH, screen):
+    def __init__(self, menuW, menuH, screen, game_screen):
         self.menuW = menuW
         self.menuH = menuH
         self.screen = screen
-
+        self.game_screen = game_screen
         self.menu_draw = pgm.Menu(self.menuW, self.menuH, 'Welcome', theme=pgm.themes.THEME_SOLARIZED)
+        self.level = Level(0, 0, 0, 0, self.game_screen)
+        self.level.level()
+        self.level.impassible_blocks()
+        self.char1 = Character(1, 1, 249, 149, self.game_screen, self.level.walkable)
 
-        self.bomb_player_one = Bomb(10, 10, 300, 300, True, True, screen)
-        self.char1 = Character(249, 149, screen)
-        self.level = Level(0, 0, 0, 0, screen)
 
     def menu(self):
         self.menu_draw.add_text_input('Name: ')
@@ -29,14 +27,10 @@ class Menu:
 
     def playButton(self):
         self.menu_draw.disable()
-        self.screen.fill((0, 0, 0))
-        self.level.level()
-        self.level.positional_grid()
-        self.level.impassible_blocks()
-        self.char1.player_movement()
+        self.game_screen.fill((0, 0, 0))
+        self.level.draw_level()
+        self.char1.player_actions()
         self.char1.draw_char()
-        self.bomb_player_one.bomb(self.char1.posX, self.char1.posY)
-
     def itemShop(self):
         pass
 
