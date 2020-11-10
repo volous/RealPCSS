@@ -7,7 +7,6 @@ class Menu:
 
     def __init__(self, menuW, menuH, screen, game_screen):
         self.menuW = menuW
-        self.menuH = menuH
         self.screen = screen
         self.game_screen = game_screen
         self.menu_draw = pgm.Menu(self.menuW, self.menuH, 'Welcome', theme=pgm.themes.THEME_SOLARIZED)
@@ -17,13 +16,13 @@ class Menu:
         self.char1 = Character(1, 1, 249, 149, self.game_screen, self.level.walkable)
 
 
-    def menu(self):
-        self.menu_draw.add_text_input('Name: ')
-        self.menu_draw.add_button('Play', self.playButton)
-        self.menu_draw.add_button('Item shop', self.itemShop)
-        self.menu_draw.add_button('Settings', self.settings)
-        self.menu_draw.add_button('Quit', self.exit)
-        self.menu_draw.mainloop(self.screen)
+    def mainMenu(self):
+        self.mainMenu_draw.add_text_input('Name: ')
+        self.mainMenu_draw.add_button('Play', self.playButton)
+        self.mainMenu_draw.add_button('Item shop', self.itemShop)
+        self.mainMenu_draw.add_button('Settings', self.settings)
+        self.mainMenu_draw.add_button('Quit', self.exit)
+        self.mainMenu_draw.mainloop(self.screen)
 
     def playButton(self):
         self.menu_draw.disable()
@@ -35,8 +34,14 @@ class Menu:
         pass
 
     def settings(self):
-        pass
+        self.mainMenu_draw.disable()
+
+
+
 
     def exit(self):
-        # Put pygame quit() command here instead and make it work
-        exit()
+        # Quits displaying on the surface
+        pg.display.quit()
+        # Quits the surface
+        pg.quit()
+

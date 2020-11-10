@@ -1,10 +1,15 @@
 import pygame as pg
 from Menu import Menu
+# import threading
 
 # initialize the pygame
 pg.init()
 
-# setting screen height, width and accessible size
+pg.display.set_caption("Bomberman Spin-off Game")
+icon = pg.image.load('res/bomb3.png')
+pg.display.set_icon(icon)
+
+# Setting screen height, width and accessible size
 size = width, height = 900, 700
 # create screen
 screen = pg.display.set_mode((width, height))
