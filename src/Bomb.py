@@ -1,55 +1,52 @@
 import time
-import Menu as m
 import pygame as pg
+import threading
 
 
 class Bomb:
-
-    # bRad is blastRadius
-    def __init__(self, bRadX, bRadY, pPosX, pPosY, bState, bReload, screen):
-        self.bRadX = bRadX
-        self.bRadY = bRadY
-        self.pPosX = pPosX
-        self.pPosY = pPosY
+    def __init__(self, explRad, pPosX, pPosY, bState, bReload, screen, walkable, index_x, index_y):
+        self.explRad = explRad
+        self.pPosX = pPosX+16
+        self.pPosY = pPosY+16
         self.bState = bState
         self.bReload = bReload
-        self.bomb_state_one = pg.image.load("res/bomb1.png")
-        pg.transform.scale(self.bomb_state_one, (32, 32))
-        self.bomb_state_two = pg.image.load("res/bomb2.png")
-        pg.transform.scale(self.bomb_state_two, (32, 32))
-        self.bomb_state_three = pg.image.load("res/bomb3.png")
-        pg.transform.scale(self.bomb_state_three, (32, 32))
-        self.bomb_state = [self.bomb_state_one, self.bomb_state_two, self.bomb_state_three]
         self.screen = screen
-        self.placed = False
-        self.secs = 200
+        self.placed = True
+        self.secs = 3
+        self.bomb_thread = threading.Thread(target=self.timer)
+        self.bomb_thread.start()
+        self.walkable = walkable
+        self.index_x = index_x
+        self.index_y = index_y
+
 
     def timer(self):
-        try:
-            while self.secs > 0:
-                self.secs -= 1
-        except:
-            print("timer fail")
+        time.sleep(self.secs)
+        self.placed = False
+        self.bomb_explode()
 
+    def place_bomb(self):
+        if self.placed:
+            pg.draw.circle(self.screen, (255, 0, 0), (self.pPosX, self.pPosY), 16, 0)
 
-
-    def bomb(self, bombX, bombY):
-        self.bombX = bombX
-        self.bombY = bombY
-        self.newX = 0
-        self.newY = 0
-        trigger = pg.key.get_pressed()
-        print(self.secs)
-        if trigger[pg.K_SPACE] and not self.placed:
-                self.placed = True
-                if self.placed:
-                    self.newX = self.bombX
-                    self.newY = self.bombY
-                    self.screen.blit(self.bomb_state[0], (self.newX, self.newY))
-                    self.timer()
-                    if self.secs == 0:
-                        self.placed = False
-                        # self.secs = 200
-
-
-
+    def bomb_explode(self):
+        for i in range(1, self.explRad+1):
+            if self.walkable[self.index_x + i, self.index_y]:
+                pg.draw.circle(self.screen, (255, 0, 0), (self.pPosX + i * 32, self.pPosY), 16, 0)
+            else:
+                break
+        for i in range(1, self.explRad+1):
+            if self.walkable[self.index_x - i, self.index_y]:
+                pg.draw.circle(self.screen, (255, 0, 0), (self.pPosX - i * 32, self.pPosY), 16, 0)
+            else:
+                break
+        for i in range(1, self.explRad+1):
+            if self.walkable[self.index_x, self.index_y + i]:
+                pg.draw.circle(self.screen, (255, 0, 0), (self.pPosX, self.pPosY + i * 32), 16, 0)
+            else:
+                break
+        for i in range(1, self.explRad+1):
+            if self.walkable[self.index_x, self.index_y - i]:
+                pg.draw.circle(self.screen, (255, 0, 0), (self.pPosX, self.pPosY - i * 32), 16, 0)
+            else:
+                break
