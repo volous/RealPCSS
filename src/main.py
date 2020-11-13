@@ -10,12 +10,11 @@ pg.display.set_caption("Bomberman Spin-off Game")
 icon = pg.image.load('res/bomb3.png')
 pg.display.set_icon(icon)
 
-# Setting screen height, width and accessible size
-size = width, height = 900, 700
-# create surface
+# Create surface from dimensions
+width, height = 900, 700
 surface = pg.display.set_mode((width, height))
 game_surface = pg.display.set_mode((width, height))
-# Initialize the pygame menu
+# Instantiate the pygame menu
 menu = Menu(height, width, surface, game_surface)
 
 # pygame_menu handles draws itself, so no need to put it in the loop
@@ -27,7 +26,7 @@ menu.draw_mainMenu()
 
 running = True
 while running:
-    menu.playButton()
+    menu.start_game()
 
     pg.time.wait(100)
 
@@ -43,5 +42,5 @@ while running:
     if menu.mainMenu.is_enabled():
         menu.mainMenu.update(events)
         menu.mainMenu.draw(surface)
-        menu.mainMenu.mainloop(surface, bgfun=menu.draw_background)
 
+        menu.mainMenu.mainloop(surface, bgfun=menu.draw_background)
