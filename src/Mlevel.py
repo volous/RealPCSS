@@ -23,6 +23,8 @@ class Level:
         self.distance = 64
         self.white = (255, 255, 255)
         self.gray = (125, 125, 125)
+        self.level()
+        self.impassible_blocks()
 
     def level(self):
         map_size = 15
@@ -52,31 +54,8 @@ class Level:
                 wall_rect_hori = pg.Rect(217 + i * 448, 117 + j * self.block_size, self.block_size, self.block_size)
                 self.imp_array.append(wall_rect_hori)
 
-    def draw_level(self):
+    def draw(self):
         for i in self.rect_array:
             pg.draw.rect(self.screen, self.white, i)
         for i in self.imp_array:
             pg.draw.rect(self.screen, self.gray, i)
-
-
-    # def positional_grid(self):
-    #     # assigning a color for the rectangles
-    #     black = (0, 0, 0)
-    #     # setting the size of the rectangles
-    #     block_size = self.block_size
-    #     # setting the map_size
-    #     map_size = 15
-    #     # adding a 2D array to store the rectangles
-    #     self.positional_array_bomb = np.ndarray([map_size, map_size], dtype=pg.Rect)
-    #     # for loop that, creates a grid from start of level edge to the end
-    #     for i in range(0, map_size):
-    #         for j in range(0, map_size):
-    #             self.rectX = 217 + i * block_size
-    #             self.rectY = 117 + j * block_size
-    #             # assigning a pygame function that draws a rectangle
-    #             self.rect = pg.Rect(self.rectX, self.rectY, block_size, block_size)
-    #             self.positional_array.append(self.rectX)
-    #             self.positional_array_bomb[i, j] = [(self.rect.x + 16), (self.rect.y + 16)]
-    #             # pg.draw.line(self.screen, blue, self.rect, 1)
-    #             # using methods from pygame to draw a rectangle on the src screen,
-    #             pg.draw.rect(self.screen, black, self.rect, 1)

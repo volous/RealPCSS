@@ -43,6 +43,6 @@ while running:
 
     if menu.mainMenu.is_enabled():
         menu.mainMenu.update(events)
-        menu.mainMenu.draw(surface)
+        # menu.mainMenu.draw_bomb(surface)
         menu.mainMenu.mainloop(surface, bgfun=menu.draw_background)
 

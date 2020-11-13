@@ -1,7 +1,6 @@
 import pygame as pg
 import pygame_menu as pgm
-from Character import Character
-from Mlevel import Level
+from Game import Game_handler as gh
 
 
 class Menu:
@@ -17,11 +16,10 @@ class Menu:
         self.settingsMenu = pgm.Menu(600, 500, "Settings", theme=pgm.themes.THEME_SOLARIZED)
         self.quitMenu = pgm.Menu(200, 200, "Quit", theme=pgm.themes.THEME_SOLARIZED)
 
-        # Initialize level and characters
-        self.level = Level(0, 0, 0, 0, self.game_surface)
-        self.level.level()
-        self.level.impassible_blocks()
-        self.char1 = Character(1, 1, 249, 149, self.game_surface, self.level.walkable, (255, 0, 0))
+        self.game = gh(self.game_surface)
+
+
+
 
     def draw_background(self):
         self.surface.fill((255, 255, 255))
@@ -37,9 +35,7 @@ class Menu:
     def playButton(self):
         self.mainMenu.disable()
         self.game_surface.fill((0, 0, 0))
-        self.level.draw_level()
-        self.char1.player_actions()
-        self.char1.draw_char()
+        self.game.draw()
 
     def draw_itemShopMenu(self):
         self.itemShopMenu.add_button("Go back", pgm.events.BACK)
@@ -49,7 +45,7 @@ class Menu:
 
     def draw_quitMenu(self):
         self.quitMenu.add_label("Are you sure?")
-        self.quitMenu.add_button("Yes", pg.quit())
+        self.quitMenu.add_button("Yes", pg.display.quit() and pg.quit())
         self.quitMenu.add_button("No", pgm.events.BACK)
         # Quits displaying on the surface
         pg.display.quit()
