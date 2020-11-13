@@ -21,18 +21,16 @@ class Menu:
 
 
 
-    def draw_background(self):
-        self.surface.fill((255, 255, 255))
-
     def draw_mainMenu(self):
+        self.surface.fill((255, 255, 255))
         self.mainMenu.add_text_input('Name: ', default="")
-        self.mainMenu.add_button('Play', self.playButton)
+        self.mainMenu.add_button('Play', self.start_game)
         self.mainMenu.add_button('Item shop', self.itemShopMenu)
         self.mainMenu.add_button('Settings', self.settingsMenu)
         self.mainMenu.add_button('Quit', self.quitMenu)
         self.mainMenu.mainloop(self.surface)
 
-    def playButton(self):
+    def start_game(self):
         self.mainMenu.disable()
         self.game_surface.fill((0, 0, 0))
         self.game.draw()
