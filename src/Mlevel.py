@@ -1,4 +1,3 @@
-import pygame as pg
 import numpy as np
 from Tile import Tile
 
@@ -18,13 +17,11 @@ class Level:
         self.rectY = 0
         self.impassible_recX = 0
         self.impassible_recY = 0
-        # self.rect_array = []
         self.tile_array = np.ndarray((15, 15), dtype=Tile)
         self.distance = 64
         self.white = (255, 255, 255)
         self.gray = (125, 125, 125)
         self.orange = (200, 100, 0)
-
         self.make_tiles()
         self.destroyable_blocks()
         self.impassible_blocks()

@@ -21,3 +21,4 @@ class Tile():
             rect = pg.Rect(217 + self.index_x * self.blocksize, 117 + self.index_y * self.blocksize, self.blocksize,
                            self.blocksize)
             pg.draw.rect(self.screen, (255, 255, 255), rect)
+            self.walkable = True

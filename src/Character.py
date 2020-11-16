@@ -1,7 +1,5 @@
 import pygame as pg
 from Bomb import Bomb
-from Tile import Tile
-import numpy as np
 
 
 class Character:

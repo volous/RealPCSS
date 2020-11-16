@@ -1,6 +1,5 @@
 import pygame as pg
 from Menu import Menu
-# import threading
 
 # initialize the pygame
 pg.init()
