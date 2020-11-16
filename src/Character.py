@@ -1,9 +1,11 @@
 import pygame as pg
 from Bomb import Bomb
+from Tile import Tile
+import numpy as np
 
 
 class Character:
-    def __init__(self, max_bombs, PLAYER_ID, index_x, index_y, posX, posY, screen, walkable, player_color, up, down, left, right,
+    def __init__(self, max_bombs, PLAYER_ID, index_x, index_y, posX, posY, screen, player_color, up, down, left, right,
                  place_bomb):
         self.bomb_count = 0
         self.max_bombs = max_bombs
@@ -18,7 +20,6 @@ class Character:
         self.rect = pg.Rect
         self.screen = screen
         self.bombs = []
-        self.walkable = walkable
         self.player_color = player_color
         self.up = up
         self.down = down
@@ -46,20 +47,20 @@ class Character:
     def bomb_handler(self):
         if self.bomb_count < self.max_bombs:
             return Bomb(self.PLAYER_ID, self.explRad, self.posX, self.posY, True, True, self.screen,
-                        self.walkable, self.index_x, self.index_y, self.player_color)
+                        self.index_x, self.index_y, self.player_color)
 
-    def player_actions(self, can_place):
+    def player_actions(self, can_place, tiles):
         trigger = pg.key.get_pressed()
-        if trigger[self.up] and self.index_y > 0 and self.walkable[self.index_x, self.index_y - 1]:
+        if trigger[self.up] and self.index_y > 0 and tiles[self.index_x, self.index_y - 1].walkable:
             self.posY -= self.vel
             self.index_y -= 1
-        elif trigger[self.down] and self.index_y < 14 and self.walkable[self.index_x, self.index_y + 1]:
+        elif trigger[self.down] and self.index_y < 14 and tiles[self.index_x, self.index_y + 1].walkable:
             self.posY += self.vel
             self.index_y += 1
-        elif trigger[self.left] and self.index_x > 0 and self.walkable[self.index_x - 1, self.index_y]:
+        elif trigger[self.left] and self.index_x > 0 and tiles[self.index_x - 1, self.index_y].walkable:
             self.posX -= self.vel
             self.index_x -= 1
-        elif trigger[self.right] and self.index_x < 14 and self.walkable[self.index_x + 1, self.index_y]:
+        elif trigger[self.right] and self.index_x < 14 and tiles[self.index_x + 1, self.index_y].walkable:
             self.posX += self.vel
             self.index_x += 1
         elif trigger[self.place_bomb] and can_place:
