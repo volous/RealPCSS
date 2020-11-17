@@ -36,12 +36,14 @@ class Bomb:
         for i in range(1, self.explRad+1):
             # if the tile is walkable the bomb is allowed to explode further
             if tile_array[self.index_x + i, self.index_y].walkable:
-                pg.draw.circle(self.screen, self.color, (self.index_x * 32 + i * 32 + 217 + 16, self.index_y * 32 + 117 + 16), 16, 0)
+                pg.draw.circle(self.screen, self.color, (self.index_x * 32 + i * 32 + 217 + 16,
+                                                         self.index_y * 32 + 117 + 16), 16, 0)
                 # appends the index's of a bombs explosion to a list
                 self.list.append((self.index_x + i, self.index_y))
             # if the tile is explodable it will stop the explosion on that tile by breaking on that tile
             elif tile_array[self.index_x + i, self.index_y].explodable:
-                pg.draw.circle(self.screen, self.color, (self.index_x * 32 + i * 32 + 217 + 16, self.index_y * 32 + 117 + 16), 16, 0)
+                pg.draw.circle(self.screen, self.color, (self.index_x * 32 + i * 32 + 217 + 16,
+                                                         self.index_y * 32 + 117 + 16), 16, 0)
                 # appends the index's of a bombs explosion to a list
                 self.list.append((self.index_x + i, self.index_y))
                 # sets the tile to be no longer visible and is walkable
@@ -53,12 +55,14 @@ class Bomb:
         for i in range(1, self.explRad+1):
             # if the tile is walkable the bomb is allowed to explode further
             if tile_array[self.index_x - i, self.index_y].walkable:
-                pg.draw.circle(self.screen, self.color, (self.index_x * 32 - i * 32 + 217 + 16, self.index_y * 32 + 117 + 16), 16, 0)
+                pg.draw.circle(self.screen, self.color, (self.index_x * 32 - i * 32 + 217 + 16,
+                                                         self.index_y * 32 + 117 + 16), 16, 0)
                 # appends the index's of a bombs explosion to a list
                 self.list.append((self.index_x - i, self.index_y))
             # if the tile is explodable it will stop the explosion on that tile by breaking on that tile
             elif tile_array[self.index_x - i, self.index_y].explodable:
-                pg.draw.circle(self.screen, self.color, (self.index_x * 32 - i * 32 + 217 + 16, self.index_y * 32 + 117 + 16), 16, 0)
+                pg.draw.circle(self.screen, self.color, (self.index_x * 32 - i * 32 + 217 + 16,
+                                                         self.index_y * 32 + 117 + 16), 16, 0)
                 # appends the index's of a bombs explosion to a list
                 self.list.append((self.index_x - i, self.index_y))
                 # sets the tile to be no longer visible and is walkable
@@ -70,12 +74,14 @@ class Bomb:
         for i in range(1, self.explRad+1):
             # if the tile is walkable the bomb is allowed to explode further
             if tile_array[self.index_x, self.index_y + i].walkable:
-                pg.draw.circle(self.screen, self.color, (self.index_x * 32 + 217 + 16, self.index_y * 32 + i * 32 + 117 + 16), 16, 0)
+                pg.draw.circle(self.screen, self.color, (self.index_x * 32 + 217 + 16,
+                                                         self.index_y * 32 + i * 32 + 117 + 16), 16, 0)
                 # appends the index's of a bombs explosion to a list
                 self.list.append((self.index_x, self.index_y + i))
             # if the tile is explodable it will stop the explosion on that tile by breaking on that tile
             elif tile_array[self.index_x, self.index_y + i].explodable:
-                pg.draw.circle(self.screen, self.color, (self.index_x * 32 + 217 + 16, self.index_y * 32 + i * 32 + 117 + 16), 16, 0)
+                pg.draw.circle(self.screen, self.color, (self.index_x * 32 + 217 + 16,
+                                                         self.index_y * 32 + i * 32 + 117 + 16), 16, 0)
                 # appends the index's of a bombs explosion to a list
                 self.list.append((self.index_x, self.index_y + i))
                 # sets the tile to be no longer visible and is walkable
@@ -87,12 +93,14 @@ class Bomb:
         for i in range(1, self.explRad+1):
             # if the tile is walkable the bomb is allowed to explode further
             if tile_array[self.index_x, self.index_y - i].walkable:
-                pg.draw.circle(self.screen, self.color, (self.index_x * 32 + 217 + 16, self.index_y * 32 - i * 32 + 117 + 16), 16, 0)
+                pg.draw.circle(self.screen, self.color, (self.index_x * 32 + 217 + 16,
+                                                         self.index_y * 32 - i * 32 + 117 + 16), 16, 0)
                 # appends the index's of a bombs explosion to a list
                 self.list.append((self.index_x, self.index_y - i))
             # if the tile is explodable it will stop the explosion on that tile by breaking on that tile
             elif tile_array[self.index_x, self.index_y - i].explodable:
-                pg.draw.circle(self.screen, self.color, (self.index_x * 32 + 217 + 16, self.index_y * 32 - i * 32 + 117 + 16), 16, 0)
+                pg.draw.circle(self.screen, self.color, (self.index_x * 32 + 217 + 16,
+                                                         self.index_y * 32 - i * 32 + 117 + 16), 16, 0)
                 # appends the index's of a bombs explosion to a list
                 self.list.append((self.index_x, self.index_y - i))
                 # sets the tile to be no longer visible and is walkable
