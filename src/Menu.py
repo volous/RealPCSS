@@ -5,9 +5,12 @@ from Game import Game_handler as gh
 
 class Menu:
     def __init__(self, menuW, menuH, surface, game_surface):
+        # initializing the height and width of the window(s)
         self.menuH = menuH
         self.menuW = menuW
+        # initializing a surface for the main menu
         self.surface = surface
+        # initializing a surface for the game window
         self.game_surface = game_surface
 
         # Initialize menus
@@ -19,11 +22,10 @@ class Menu:
         self.game = gh(self.game_surface)
 
 
-
-
     def draw_mainMenu(self):
+        self.name = ""
         self.surface.fill((255, 255, 255))
-        self.mainMenu.add_text_input('Name: ', default="")
+        self.mainMenu.add_text_input('Name: ', self.name)
         self.mainMenu.add_button('Play', self.start_game)
         self.mainMenu.add_button('Item shop', self.itemShopMenu)
         self.mainMenu.add_button('Settings', self.settingsMenu)

@@ -1,7 +1,7 @@
 import pygame as pg
 from Menu import Menu
 
-# initialize the pygame
+# initialize pygame
 pg.init()
 
 # Set caption and icon
@@ -22,10 +22,12 @@ menu.draw_mainMenu()
 # menu.draw_settingsMenu()
 # menu.draw_quitMenu()
 
+# boolean variable that keeps the while loop running
 running = True
 while running:
+    # runs when the play button in the menu is pressed
     menu.start_game()
-
+    # delay so the game is slower
     pg.time.wait(100)
 
     # checks if there are events in the pygame window
@@ -37,9 +39,9 @@ while running:
 
     if menu.mainMenu.is_enabled():
         menu.mainMenu.update(events)
-        # menu.mainMenu.draw_bomb(surface)
+        menu.mainMenu.draw_bomb(surface)
         menu.mainMenu.mainloop(surface, bgfun=menu.draw_background)
 
         menu.mainMenu.mainloop(surface)
-
+    # updates the display of the pygame window
     pg.display.update()
