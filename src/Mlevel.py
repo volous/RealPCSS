@@ -31,7 +31,6 @@ class Level:
                         self.tile_array[i, j].walkable = False
                         self.tile_array[i, j].color = self.orange
 
-
     # method that draws the impassible blocks in tile_array
     def impassible_blocks(self):
         for i in range(0, 15):
