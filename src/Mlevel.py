@@ -1,12 +1,13 @@
 import numpy as np
 from Tile import Tile
+import constants
 
 
 class Level:
 
-    def __init__(self, screen):
+    def __init__(self):
         # Initialize variables
-        self.screen = screen
+        self.screen = constants.game_surface
         self.tile_array = np.ndarray((15, 15), dtype=Tile)
         self.white = (255, 255, 255)
         self.gray = (125, 125, 125)
@@ -19,7 +20,7 @@ class Level:
     def make_tiles(self):
         for i in range(0, 15):
             for j in range(0, 15):
-                self.tile_array[i, j] = Tile(self.screen, self.white, True, False, True, i, j)
+                self.tile_array[i, j] = Tile(self.white, True, False, True, i, j)
 
     # method that makes the breakable blocks in tile_array
     def destroyable_blocks(self):

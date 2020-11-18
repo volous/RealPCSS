@@ -1,4 +1,4 @@
-import player_id
+import constants
 from Character import Character
 from Mlevel import Level
 import pygame as pg
@@ -6,14 +6,15 @@ import time
 from _thread import *
 import pickle
 import socket
-from Network import Network
+import Network
+import Server
 
 
 class Game_handler:
 
     def __init__(self):
         # Initialize level, characters
-        self.level = Level(player_id.game_surface)
+        self.level = Level()
 
         # self.char1 = Character(3, player_id.PLAYER_ONE_ID, 1, 1, self.game_surface,
         #                        (255, 0, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE)
@@ -24,18 +25,20 @@ class Game_handler:
         # self.characters = [self.char1, self.char2]
         # an empty array that tracks bombs and their explosions
         self.bombs = []
-        self.n = Network()
-        self.p = self.n.getP()
+
+        # self.p = self.n.getP()
 
 
     # method that draws the level and keeps track of the actions for the player and bombs
-    def draw(self):
+    def draw(self, player, player2):
+        player = Character.draw
+        player2 = Character.draw
         self.level.draw()
-        # self.actions()
-        # self.bomb_actions()
-        self.p.actions()
-        self.p.bomb_actions()
-        p2 = self.n.send(self.p)
+        self.actions()
+        self.bomb_actions()
+        # self.p.action()
+        # self.p.bomb_actions()
+        # p2 = self.n.send(self.p)
 
     # method that draws the bomb and the bombs explosion for each character
     def bomb_actions(self):
@@ -53,7 +56,7 @@ class Game_handler:
     # method that keeps track of what actions a player can perform
     def actions(self):
         # for each c in characters draw a character
-        for c in self.characters:
+        for c in Server.characters:
             can_place = True
             for b in self.bombs:
                 # if a player objects x and y index is inside the bombs x and y index the player objects are not allowed
