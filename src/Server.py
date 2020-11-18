@@ -1,9 +1,15 @@
 import socket
 from _thread import *
+import pickle
+
+from Character import Character
+import player_id
+import pygame as pg
+from Mlevel import Level
 
 server = (socket.gethostbyname(socket.gethostname()))
 port = 5555
-
+l = Level()
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
@@ -11,39 +17,58 @@ try:
 except socket.error as e:
     str(e)
 
+characters = [Character(3, player_id.PLAYER_ONE_ID, 1, 1, l, (255, 0, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE),
+              Character(3, player_id.PLAYER_TWO_ID, 13, 1, l, (0, 255, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE)]
+levels = [Level(l)]
 # amount of clients to connect to the server
 s.listen(4)
 print("Server started on: ", server)
 print("Waiting for connection")
 
 
-def threaded_client(conn):
-    conn.send(str.encode("connected"))
+def threaded_client(conn, character, level):
+    conn.send(pickle.dumps(characters[character]))
+    conn.send(pickle.dumps(levels[level]))
     reply = ""
+    reply2 = ""
     while True:
         try:
-            # Amount of bits receiving
-            data = conn.recv(2048)
-            reply = data.decode("utf-8")
-
-            # If client don't send any data, he must be disconnected
+            data = pickle.loads(conn.recv(2048))
+            data2 = pickle.loads(conn.recv(2048))
+            characters[character] = data
+            levels[level] = data2
             if not data:
                 print("Disconnected")
                 break
             else:
-                print("Received: ", reply)
-                print("sending: ", reply)
+                if characters == 1:
+                    reply = characters[0]
+                else:
+                    reply = characters[1]
 
-            conn.sendall(str.enconde(reply))
+                print("Received: ", data)
+                print("Sending : ", reply)
+            if not data2:
+                print("Disconnected")
+                break
+            else:
+                if levels == 1:
+                    reply = levels[0]
+                print("Received: ", data2)
+                print("Sending: ", reply2)
+
+            conn.sendall(pickle.dumps(reply))
         except:
             break
 
-    print ("Connection lost")
+    print("Lost connection")
     conn.close()
 
 
+currentPlayer = 0
 while True:
     conn, address = s.accept()
     print("Connected to:", address)
 
-    start_new_thread(threaded_client, (conn,))
+    start_new_thread(threaded_client, (conn, currentPlayer))
+    currentPlayer += 1

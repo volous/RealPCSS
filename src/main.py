@@ -1,11 +1,11 @@
 import pygame as pg
 from Menu import Menu
-
+from Network import Network
 if __name__ == '__main__':
 
     # initialize pygame
     pg.init()
-
+    n = Network()
     # Set caption and icon
     pg.display.set_caption("Bomberman Spin-off Game")
     icon = pg.image.load('res/bomb3.png')

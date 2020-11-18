@@ -3,6 +3,10 @@ from Character import Character
 from Mlevel import Level
 import pygame as pg
 import time
+from _thread import *
+import pickle
+import socket
+from Network import Network
 
 
 class Game_handler:
@@ -12,21 +16,27 @@ class Game_handler:
         self.game_surface = game_surface
         self.level = Level(self.game_surface)
 
-        self.char1 = Character(3, player_id.PLAYER_ONE_ID, 1, 1, self.game_surface,
-                               (255, 0, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE)
+        # self.char1 = Character(3, player_id.PLAYER_ONE_ID, 1, 1, self.game_surface,
+        #                        (255, 0, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE)
+        #
+        # self.char2 = Character(3, player_id.PLAYER_TWO_ID, 13, 1, self.game_surface,
+        #                        (0, 255, 0), pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_k)
 
-        self.char2 = Character(3, player_id.PLAYER_TWO_ID, 13, 1, self.game_surface,
-                               (0, 255, 0), pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_k)
-
-        self.characters = [self.char1, self.char2]
+        # self.characters = [self.char1, self.char2]
         # an empty array that tracks bombs and their explosions
         self.bombs = []
+        self.n = Network()
+        self.p = self.n.getP()
+
 
     # method that draws the level and keeps track of the actions for the player and bombs
     def draw(self):
         self.level.draw()
-        self.actions()
-        self.bomb_actions()
+        # self.actions()
+        # self.bomb_actions()
+        self.p2 = self.n.send(self.p)
+        self.p.actions()
+        self.p.bomb_actions()
 
     # method that draws the bomb and the bombs explosion for each character
     def bomb_actions(self):
