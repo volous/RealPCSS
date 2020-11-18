@@ -10,7 +10,6 @@ class Network:
         self.address = (self.server, self.port)
         self.p = self.connect()
 
-
         self.multiplier = 8
 
     def getP(self):
@@ -29,6 +28,3 @@ class Network:
             return pickle.loads(self.client.recv(2048 * self.multiplier))
         except socket.error as e:
             print(e)
-
-
-n = Network()

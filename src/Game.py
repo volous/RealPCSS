@@ -11,10 +11,9 @@ from Network import Network
 
 class Game_handler:
 
-    def __init__(self, game_surface):
-        # Initialize level, characters and game surface
-        self.game_surface = game_surface
-        self.level = Level(self.game_surface)
+    def __init__(self):
+        # Initialize level, characters
+        self.level = Level(player_id.game_surface)
 
         # self.char1 = Character(3, player_id.PLAYER_ONE_ID, 1, 1, self.game_surface,
         #                        (255, 0, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE)
@@ -34,9 +33,9 @@ class Game_handler:
         self.level.draw()
         # self.actions()
         # self.bomb_actions()
-        self.p2 = self.n.send(self.p)
         self.p.actions()
         self.p.bomb_actions()
+        p2 = self.n.send(self.p)
 
     # method that draws the bomb and the bombs explosion for each character
     def bomb_actions(self):

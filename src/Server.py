@@ -9,7 +9,7 @@ from Mlevel import Level
 
 server = (socket.gethostbyname(socket.gethostname()))
 port = 5555
-l = Level()
+l = Level(player_id.game_surface)
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
@@ -17,9 +17,9 @@ try:
 except socket.error as e:
     str(e)
 
-characters = [Character(3, player_id.PLAYER_ONE_ID, 1, 1, l, (255, 0, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE),
-              Character(3, player_id.PLAYER_TWO_ID, 13, 1, l, (0, 255, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE)]
-levels = [Level(l)]
+characters = [Character(3, player_id.PLAYER_ONE_ID, 1, 1, player_id.game_surface, (255, 0, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE),
+              Character(3, player_id.PLAYER_TWO_ID, 13, 1, player_id.game_surface, (0, 255, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE)]
+levels = [Level(player_id.game_surface)]
 # amount of clients to connect to the server
 s.listen(4)
 print("Server started on: ", server)
@@ -30,7 +30,6 @@ def threaded_client(conn, character, level):
     conn.send(pickle.dumps(characters[character]))
     conn.send(pickle.dumps(levels[level]))
     reply = ""
-    reply2 = ""
     while True:
         try:
             data = pickle.loads(conn.recv(2048))
@@ -48,6 +47,7 @@ def threaded_client(conn, character, level):
 
                 print("Received: ", data)
                 print("Sending : ", reply)
+
             if not data2:
                 print("Disconnected")
                 break
@@ -55,7 +55,7 @@ def threaded_client(conn, character, level):
                 if levels == 1:
                     reply = levels[0]
                 print("Received: ", data2)
-                print("Sending: ", reply2)
+                print("Sending: ", reply)
 
             conn.sendall(pickle.dumps(reply))
         except:

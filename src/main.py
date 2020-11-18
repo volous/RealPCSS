@@ -1,8 +1,10 @@
 import pygame as pg
-from Menu import Menu
 from Network import Network
-if __name__ == '__main__':
+from Game import Game_handler as gh
+import player_id
 
+
+if __name__ == '__main__':
     # initialize pygame
     pg.init()
     n = Network()
@@ -11,24 +13,11 @@ if __name__ == '__main__':
     icon = pg.image.load('res/bomb3.png')
     pg.display.set_icon(icon)
 
-    # Create surface from dimensions
-    width, height = 900, 700
-    surface = pg.display.set_mode((width, height))
-    game_surface = pg.display.set_mode((width, height))
-    # Instantiate the pygame menu
-    menu = Menu(height, width, surface, game_surface)
-
-    # pygame_menu handles draws itself, so no need to put it in the loop
-    menu.draw_mainMenu()
-    # menu.draw_itemShopMenu()
-    # menu.draw_settingsMenu()
-    # menu.draw_quitMenu()
+    game = gh(player_id.game_surface)
 
     # boolean variable that keeps the while loop running
     running = True
     while running:
-        # runs when the play button in the menu is pressed
-        menu.start_game()
         # delay so the game is slower
         pg.time.wait(100)
 
@@ -39,11 +28,8 @@ if __name__ == '__main__':
             if event.type == pg.QUIT:
                 running = False
 
-        if menu.mainMenu.is_enabled():
-            menu.mainMenu.update(events)
-            menu.mainMenu.draw_bomb(surface)
-            menu.mainMenu.mainloop(surface, bgfun=menu.draw_background)
+        player_id.game_surface.fill((0, 0, 0))
+        game.draw()
 
-            menu.mainMenu.mainloop(surface)
         # updates the display of the pygame window
         pg.display.update()
