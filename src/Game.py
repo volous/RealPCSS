@@ -8,7 +8,7 @@ import time
 class Game_handler:
 
     def __init__(self, game_surface):
-        # Initialize level and characters
+        # Initialize level, characters and game surface
         self.game_surface = game_surface
         self.level = Level(self.game_surface)
 
@@ -28,17 +28,15 @@ class Game_handler:
         self.actions()
         self.bomb_actions()
 
-    def player_names(self):
-        pass
-
     # method that draws the bomb and the bombs explosion for each character
     def bomb_actions(self):
         for b in self.bombs:
             if not b.placed:
                 b.bomb_explode(self.level.tile_array)
                 chars = [c for c in self.characters if c.PLAYER_ID == b.PLAYER_ID]
+                # if bomb is no longer placed reduce bomb_count
                 chars[0].bomb_count -= 1
-                self.characters = [c for c in self.characters if not c.check_deth(b)]
+                self.characters = [c for c in self.characters if not c.check_death(b)]
                 self.bombs.remove(b)
             else:
                 b.draw_bomb(time.time())
@@ -58,4 +56,5 @@ class Game_handler:
             if bomb is not None:
                 self.bombs.append(bomb)
                 c.bomb_count += 1
+            # draw each character
             c.draw()

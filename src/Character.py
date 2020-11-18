@@ -40,7 +40,7 @@ class Character:
             self.screen.blit(text, (self.index_x * 32 + 217, self.index_y * 32 + 117))
 
     # method that allows to check whether a player is alive or dead
-    def check_deth(self, bomb):
+    def check_death(self, bomb):
         # if statement that checks whether the index_x and y is inside of a list of bombs
         if (self.index_x, self.index_y) in bomb.list:
             # if index_ and y is inside of the bomb list it will set the boolean alive to false and remove the player(s)

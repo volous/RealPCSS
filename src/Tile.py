@@ -13,6 +13,7 @@ class Tile():
         self.index_y = index_y
         self.blocksize = 32
 
+    # method that is used to draw the level by giving a start point and different variables to make the individual tiles
     def draw(self):
         if self.visible:
             rect = pg.Rect(217 + self.index_x * self.blocksize, 117 + self.index_y * self.blocksize, self.blocksize, self.blocksize)

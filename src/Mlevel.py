@@ -15,11 +15,13 @@ class Level:
         self.destroyable_blocks()
         self.impassible_blocks()
 
+    # method that makes the base tiles of the level in tile_array
     def make_tiles(self):
         for i in range(0, 15):
             for j in range(0, 15):
                 self.tile_array[i, j] = Tile(self.screen, self.white, True, False, True, i, j)
 
+    # method that makes the breakable blocks in tile_array
     def destroyable_blocks(self):
         for i in range(1, 14):
             for j in range(1, 14):
@@ -30,7 +32,7 @@ class Level:
                         self.tile_array[i, j].color = self.orange
 
 
-
+    # method that draws the impassible blocks in tile_array
     def impassible_blocks(self):
         for i in range(0, 15):
             for j in range(0, 15):
@@ -42,6 +44,7 @@ class Level:
                     self.tile_array[i, j].walkable = False
                     self.tile_array[i, j].color = self.gray
 
+    # method that draws all the objects in tile_array
     def draw(self):
         for i in self.tile_array:
             for j in i:

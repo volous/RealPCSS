@@ -25,7 +25,7 @@ class Bomb:
         # if the boolean placed is true then draw a bomb on the players position and text that counts up to
         # 3 and then explodes
         if self.placed:
-            pg.draw.circle(self.screen, self.color, (self.index_x * 32 + 217 +16, self.index_y * 32 + 117 + 16), 16, 0)
+            pg.draw.circle(self.screen, self.color, (self.index_x * 32 + 217 + 16, self.index_y * 32 + 117 + 16), 16, 0)
             font = pg.font.Font('freesansbold.ttf', 20)
             text = font.render(str(boom), True, (255, 255, 255), self.color)
             self.screen.blit(text, (self.index_x * 32 + 217 + 8, self.index_y * 32 + 117 + 8))
