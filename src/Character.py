@@ -1,11 +1,11 @@
 import pygame as pg
 from Bomb import Bomb
+import constants
 
 
 class Character:
     # init
-    def __init__(self, max_bombs, PLAYER_ID, index_x, index_y, screen, player_color, up, down, left, right,
-                 place_bomb):
+    def __init__(self, max_bombs, PLAYER_ID, index_x, index_y, player_color):
         # initializing variables
         self.bomb_count = 0
         self.max_bombs = max_bombs
@@ -15,14 +15,10 @@ class Character:
         self.width = 32
         self.height = 32
         self.rect = pg.Rect
-        self.screen = screen
+        self.screen = constants.game_surface
         self.bombs = []
         self.player_color = player_color
-        self.up = up
-        self.down = down
-        self.left = left
-        self.right = right
-        self.place_bomb = place_bomb
+
         self.alive = True
         self.explRad = 3
 
@@ -36,7 +32,8 @@ class Character:
             pg.draw.rect(self.screen, self.player_color, self.rect)
             # redundant will be removed
             font = pg.font.Font('freesansbold.ttf', 10)
-            text = font.render(str((self.index_x * 32 + 217, self.index_y * 32 + 117)), True, (255, 255, 255), (0, 0, 0))
+            text = font.render(str((self.index_x * 32 + 217, self.index_y * 32 + 117)),
+                               True, (255, 255, 255), (0, 0, 0))
             self.screen.blit(text, (self.index_x * 32 + 217, self.index_y * 32 + 117))
 
     # method that allows to check whether a player is alive or dead
@@ -53,22 +50,22 @@ class Character:
     # as long as bombs placed are lower than max_bombs
     def bomb_handler(self):
         if self.bomb_count < self.max_bombs:
-            return Bomb(self.PLAYER_ID, self.explRad, True, True, self.screen,
+            return Bomb(self.PLAYER_ID, self.explRad, True, True,
                         self.index_x, self.index_y, self.player_color)
 
     # method that handles player actions such as movement, and bomb placement.
     # checks which key has been pressed and if the tile they are trying to move into is walkable
     def player_actions(self, can_place, tiles):
         trigger = pg.key.get_pressed()
-        if trigger[self.up] and self.index_y > 0 and tiles[self.index_x, self.index_y - 1].walkable:
+        if trigger[pg.K_w] and self.index_y > 0 and tiles[self.index_x, self.index_y - 1].walkable:
             self.index_y -= 1
-        elif trigger[self.down] and self.index_y < 14 and tiles[self.index_x, self.index_y + 1].walkable:
+        elif trigger[pg.K_s] and self.index_y < 14 and tiles[self.index_x, self.index_y + 1].walkable:
             self.index_y += 1
-        elif trigger[self.left] and self.index_x > 0 and tiles[self.index_x - 1, self.index_y].walkable:
+        elif trigger[pg.K_a] and self.index_x > 0 and tiles[self.index_x - 1, self.index_y].walkable:
             self.index_x -= 1
-        elif trigger[self.right] and self.index_x < 14 and tiles[self.index_x + 1, self.index_y].walkable:
+        elif trigger[pg.K_d] and self.index_x < 14 and tiles[self.index_x + 1, self.index_y].walkable:
             self.index_x += 1
-        elif trigger[self.place_bomb] and can_place:
+        elif trigger[pg.K_SPACE] and can_place:
             return self.bomb_handler()
         else:
             return None
