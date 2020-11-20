@@ -6,7 +6,7 @@ import time
 from _thread import *
 import pickle
 import socket
-from Network import Network
+# from Network import Network
 
 
 class Game_handler:
@@ -25,8 +25,8 @@ class Game_handler:
         self.characters = [self.char1, self.char2]
         # an empty array that tracks bombs and their explosions
         self.bombs = []
-        self.n = Network()
-        self.p = self.n.getP()
+        # self.n = Network()
+        # self.p = self.n.getP()
 
 
     # method that draws the level and keeps track of the actions for the player and bombs
