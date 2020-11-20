@@ -5,9 +5,9 @@ import constants
 
 class Level:
 
-    def __init__(self, screen):
+    def __init__(self):
         # Initialize variables
-        self.screen = screen
+        self.screen = constants.game_surface
         self.tile_array = np.ndarray((15, 15), dtype=Tile)
         self.white = (255, 255, 255)
         self.gray = (125, 125, 125)

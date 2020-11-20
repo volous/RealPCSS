@@ -3,13 +3,13 @@ import pygame as pg
 import constants
 
 class Bomb:
-    def __init__(self, PLAYER_ID, explRad, bState, bReload, screen, index_x, index_y, color):
+    def __init__(self, PLAYER_ID, explRad, bState, bReload, index_x, index_y, color):
         # initializing variables and lists for the bomb class
         self.PLAYER_ID = PLAYER_ID
         self.explRad = explRad
         self.bState = bState
         self.bReload = bReload
-        self.screen = screen
+        self.screen = constants.game_surface
         self.placed = True
         self.sec = time.time()
         self.time_max = 3
