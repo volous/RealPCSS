@@ -1,6 +1,8 @@
 import pygame as pg
 import pygame_menu as pgm
 from Game import Game_handler as gh
+from Network import Network
+import player_id
 
 
 def draw_menus():
@@ -25,9 +27,6 @@ if __name__ == '__main__':
     pg.init()
 
 
-    # Set dimensions
-    width, height = 900, 700
-    surface = pg.display.set_mode((width, height))
 
     # Set caption and icon
     pg.display.set_caption("Bomberman Spin-off Game")
@@ -35,20 +34,25 @@ if __name__ == '__main__':
     pg.display.set_icon(icon)
 
     # init menus
-    mainMenu = pgm.Menu(width=width, height=height, title="Welcome", enabled=True, theme=pgm.themes.THEME_SOLARIZED)
-    itemShopMenu = pgm.Menu(width=width, height=height, title="Item Shop", enabled=True, theme=pgm.themes.THEME_SOLARIZED)
-    settingsMenu = pgm.Menu(width=width, height=height, title="Settings", enabled=True, theme=pgm.themes.THEME_SOLARIZED)
-    quitMenu = pgm.Menu(width=width, height=height, title="Are you sure?", enabled=True, theme=pgm.themes.THEME_SOLARIZED)
+    mainMenu = pgm.Menu(width=player_id.width, height=player_id.height, title="Welcome", enabled=True, theme=pgm.themes.THEME_SOLARIZED)
+    itemShopMenu = pgm.Menu(width=player_id.width, height=player_id.height, title="Item Shop", enabled=True, theme=pgm.themes.THEME_SOLARIZED)
+    settingsMenu = pgm.Menu(width=player_id.width, height=player_id.height, title="Settings", enabled=True, theme=pgm.themes.THEME_SOLARIZED)
+    quitMenu = pgm.Menu(width=player_id.width, height=player_id.height, title="Are you sure?", enabled=True, theme=pgm.themes.THEME_SOLARIZED)
+
+
 
     # Draw the main menu and submenus
     draw_menus()
 
-    game = gh(surface)
+
+
+    game = gh(player_id.surface)
     # boolean variable that keeps the while loop running
     running = True
     while running:
         # delay so the game is slower
         pg.time.wait(100)
+        p2 = n.send(p)
 
         # checks if there are events in the pygame window
         events = pg.event.get()
@@ -58,12 +62,12 @@ if __name__ == '__main__':
                 running = False
 
         if mainMenu.is_enabled():
-            mainMenu.draw(surface)
+            mainMenu.draw(player_id.surface)
             mainMenu.update(events)
 
         if not mainMenu.is_enabled():
             mainMenu.disable()
-            surface.fill((0, 0, 0))
+            player_id.surface.fill((0, 0, 0))
             game.draw()
             pg.display.update()
 

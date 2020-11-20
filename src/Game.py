@@ -6,6 +6,8 @@ import time
 from _thread import *
 import pickle
 import socket
+from Network import Network
+from Server import characters
 
 
 class Game_handler:
@@ -15,22 +17,35 @@ class Game_handler:
         self.screen = screen
         self.level = Level(self.screen)
 
-        self.char1 = Character(3, player_id.PLAYER_ONE_ID, 1, 1, self.screen,
-                               (255, 0, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE)
+        # self.char1 = Character(3, player_id.PLAYER_ONE_ID, 1, 1, self.screen,
+        #                        (255, 0, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE)
+        #
+        # self.char2 = Character(3, player_id.PLAYER_TWO_ID, 13, 1, self.screen,
+        #                        (0, 255, 0), pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_k)
 
-        self.char2 = Character(3, player_id.PLAYER_TWO_ID, 13, 1, self.screen,
-                               (0, 255, 0), pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_k)
-
-        self.characters = [self.char1, self.char2]
+        self.player = [characters[0], characters[1]]
         # an empty array that tracks bombs and their explosions
         self.bombs = []
 
+    def redrawWindow(self, win, player, player2):
+        player.draw(win)
+        player2.draw(win)
 
     # method that draws the level and keeps track of the actions for the player and bombs
     def draw(self):
+        n = Network()
+        p = n.getP()
+
+
+
         self.level.draw()
         self.actions()
         self.bomb_actions()
+
+        p.action()
+        p2 = n.send(p)
+
+        self.redrawWindow(player_id.surface, p, p2)
 
 
     # method that draws the bomb and the bombs explosion for each character
@@ -38,10 +53,10 @@ class Game_handler:
         for b in self.bombs:
             if not b.placed:
                 b.bomb_explode(self.level.tile_array)
-                chars = [c for c in self.characters if c.PLAYER_ID == b.PLAYER_ID]
+                chars = [c for c in self.player if c.PLAYER_ID == b.PLAYER_ID]
                 # if bomb is no longer placed reduce bomb_count
                 chars[0].bomb_count -= 1
-                self.characters = [c for c in self.characters if not c.check_death(b)]
+                self.player = [c for c in self.player if not c.check_death(b)]
                 self.bombs.remove(b)
             else:
                 b.draw_bomb(time.time())
@@ -49,7 +64,7 @@ class Game_handler:
     # method that keeps track of what actions a player can perform
     def actions(self):
         # for each c in characters draw a character
-        for c in self.characters:
+        for c in self.player:
             can_place = True
             for b in self.bombs:
                 # if a player objects x and y index is inside the bombs x and y index the player objects are not allowed
