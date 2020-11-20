@@ -3,8 +3,8 @@ import constants
 
 class Tile():
 
-    def __init__(self, color, walkable, explodable, visible, index_x, index_y):
-        self.screen = constants.game_surface
+    def __init__(self, screen, color, walkable, explodable, visible, index_x, index_y):
+        self.screen = screen
         self.color = color
         self.walkable = walkable
         self.explodable = explodable

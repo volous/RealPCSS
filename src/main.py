@@ -9,12 +9,16 @@ if __name__ == '__main__':
     pg.init()
     n = Network()
     p = n.getP()
+
+    width, height = 700, 900
+
+    screen = pg.display.set_mode(width, height)
     # Set caption and icon
     pg.display.set_caption("Bomberman Spin-off Game")
     icon = pg.image.load('res/bomb3.png')
     pg.display.set_icon(icon)
 
-    game = gh()
+    game = gh(screen)
 
 
     # boolean variable that keeps the while loop running
@@ -30,8 +34,8 @@ if __name__ == '__main__':
             if event.type == pg.QUIT:
                 running = False
         p2 = n.send(p)
-        constants.game_surface.fill((0, 0, 0))
-        game.draw(p, p2)
+        screen.fill(0, 0, 0)
+        game.draw()
 
         # updates the display of the pygame window
         pg.display.update()
