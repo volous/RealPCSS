@@ -1,13 +1,10 @@
 import pygame as pg
 import pygame_menu as pgm
-# from Network import Network
 from Game import Game_handler as gh
-import player_id
-
-imgPath = "res/img.jpg"
 
 
 def draw_menus():
+    imgPath = "res/img.jpg"
     mainMenu.add_image(imgPath)
 
     # Get text input value using: print("Hi " + widget1.get_value() + "!")
@@ -23,18 +20,10 @@ def draw_menus():
     q_widget2 = quitMenu.add_button("No", pgm.events.BACK)
 
 
-# def start_the_game():
-#     mainMenu.disable()
-#     game = gh(surface)
-#     surface.fill((0, 0, 0))
-#     game.draw()
-
-
 if __name__ == '__main__':
     # initialize pygame
     pg.init()
-    # n = Network()
-    # p = n.getP()
+
 
     # Set dimensions
     width, height = 900, 700
@@ -67,8 +56,6 @@ if __name__ == '__main__':
             # if the window closes, it gets closed properly
             if event.type == pg.QUIT:
                 running = False
-
-        # p2 = n.send(p)
 
         if mainMenu.is_enabled():
             mainMenu.draw(surface)
