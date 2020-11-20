@@ -16,33 +16,33 @@ try:
 except socket.error as e:
     str(e)
 
-characters = [Character(3, constants.PLAYER_ONE_ID, 1, 1, (255, 0, 0)),
-              Character(3, constants.PLAYER_TWO_ID, 13, 1, (0, 255, 0))]
-levels = [Level()]
+# characters = [Character(3, constants.PLAYER_ONE_ID, 1, 1, (255, 0, 0)),
+#               Character(3, constants.PLAYER_TWO_ID, 13, 1, (0, 255, 0))]
+# levels = [Level()]
 # amount of clients to connect to the server
-s.listen(2)
+s.listen(4)
 print("Server started on: ", server)
 print("Waiting for connection")
 
 
 def threaded_client(conn, character, level):
-    conn.send(pickle.dumps(characters[character]))
-    conn.send(pickle.dumps(levels[level]))
+    # conn.send(pickle.dumps(characters[character]))
+    # conn.send(pickle.dumps(levels[level]))
     reply = ""
     while True:
         try:
             data = pickle.loads(conn.recv(2048))
             data2 = pickle.loads(conn.recv(2048))
-            characters[character] = data
-            levels[level] = data2
+            # characters[character] = data
+            # levels[level] = data2
             if not data:
                 print("Disconnected")
                 break
             else:
-                if characters == 1:
-                    reply = characters[0]
-                else:
-                    reply = characters[1]
+                # if characters == 1:
+                #     reply = characters[0]
+                # else:
+                #     reply = characters[1]
 
                 print("Received: ", data)
                 print("Sending : ", reply)
@@ -51,8 +51,8 @@ def threaded_client(conn, character, level):
                 print("Disconnected")
                 break
             else:
-                if levels == 1:
-                    reply = levels[0]
+                # if levels == 1:
+                #     reply = levels[0]
                 print("Received: ", data2)
                 print("Sending: ", reply)
 
