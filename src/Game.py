@@ -16,10 +16,10 @@ class Game_handler:
         self.screen = screen
         self.level = Level(self.screen)
 
-        self.char1 = Character(3, constants.PLAYER_ONE_ID, 1, 1, self.screen,
+        self.char1 = Character(3, player_id.PLAYER_ONE_ID, 1, 1, self.screen,
                                (255, 0, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE)
 
-        self.char2 = Character(3, constants.PLAYER_TWO_ID, 13, 1, self.screen,
+        self.char2 = Character(3, player_id.PLAYER_TWO_ID, 13, 1, self.screen,
                                (0, 255, 0), pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_k)
 
         self.characters = [self.char1, self.char2]
@@ -30,9 +30,7 @@ class Game_handler:
 
 
     # method that draws the level and keeps track of the actions for the player and bombs
-    def draw(self, player, player2):
-        player = Character.draw
-        player2 = Character.draw
+    def draw(self):
         self.level.draw()
         self.actions()
         self.bomb_actions()
