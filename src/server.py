@@ -2,10 +2,10 @@ import socket
 from _thread import *
 import pickle
 
-from Character import Character
+from character import Character
 import player_id
 import pygame as pg
-from Mlevel import Level
+from mlevel import Level
 
 
 server = (socket.gethostbyname(socket.gethostname()))

@@ -1,6 +1,6 @@
 import player_id
-from Character import Character
-from Mlevel import Level
+from character import Character
+from mlevel import Level
 import pygame as pg
 import time
 from _thread import *
