@@ -3,12 +3,13 @@ from _thread import *
 import pickle
 
 from Character import Character
-import constants
+import player_id
 import pygame as pg
 from Mlevel import Level
 
 server = (socket.gethostbyname(socket.gethostname()))
 port = 5555
+l = Level(player_id.game_surface)
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
@@ -16,9 +17,9 @@ try:
 except socket.error as e:
     str(e)
 
-# characters = [Character(3, constants.PLAYER_ONE_ID, 1, 1, (255, 0, 0)),
-#               Character(3, constants.PLAYER_TWO_ID, 13, 1, (0, 255, 0))]
-# levels = [Level()]
+characters = [Character(3, player_id.PLAYER_ONE_ID, 1, 1, player_id.game_surface, (255, 0, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE),
+              Character(3, player_id.PLAYER_TWO_ID, 13, 1, player_id.game_surface, (0, 255, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE)]
+levels = [Level(player_id.game_surface)]
 # amount of clients to connect to the server
 s.listen(4)
 print("Server started on: ", server)

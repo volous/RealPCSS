@@ -1,6 +1,5 @@
 import pygame as pg
 from Bomb import Bomb
-import constants
 
 
 class Character:
@@ -23,7 +22,11 @@ class Character:
         self.screen = screen
         self.bombs = []
         self.player_color = player_color
-
+        self.up = up
+        self.down = down
+        self.left = left
+        self.right = right
+        self.place_bomb = place_bomb
         self.alive = True
         self.explRad = 3
 
@@ -37,8 +40,7 @@ class Character:
             pg.draw.rect(self.screen, self.player_color, self.rect)
             # redundant will be removed
             font = pg.font.Font('freesansbold.ttf', 10)
-            text = font.render(str((self.index_x * 32 + 217, self.index_y * 32 + 117)),
-                               True, (255, 255, 255), (0, 0, 0))
+            text = font.render(str((self.index_x * 32 + 217, self.index_y * 32 + 117)), True, (255, 255, 255), (0, 0, 0))
             self.screen.blit(text, (self.index_x * 32 + 217, self.index_y * 32 + 117))
 
     # method that allows to check whether a player is alive or dead
@@ -55,7 +57,7 @@ class Character:
     # as long as bombs placed are lower than max_bombs
     def bomb_handler(self):
         if self.bomb_count < self.max_bombs:
-            return Bomb(self.PLAYER_ID, self.explRad, True, True,
+            return Bomb(self.PLAYER_ID, self.explRad, True, True, self.screen,
                         self.index_x, self.index_y, self.player_color)
 
     # method that handles player actions such as movement, and bomb placement.

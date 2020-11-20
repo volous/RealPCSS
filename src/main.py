@@ -1,7 +1,7 @@
 import pygame as pg
 from Network import Network
 from Game import Game_handler as gh
-import constants
+import player_id
 
 
 if __name__ == '__main__':
@@ -18,8 +18,7 @@ if __name__ == '__main__':
     icon = pg.image.load('res/bomb3.png')
     pg.display.set_icon(icon)
 
-    game = gh(screen)
-
+    game = gh()
 
     # boolean variable that keeps the while loop running
     running = True
@@ -34,7 +33,10 @@ if __name__ == '__main__':
             if event.type == pg.QUIT:
                 running = False
         p2 = n.send(p)
-        screen.fill(0, 0, 0)
+        constants.game_surface.fill((0, 0, 0))
+        game.draw(p, p2)
+
+        player_id.game_surface.fill((0, 0, 0))
         game.draw()
 
         # updates the display of the pygame window
