@@ -1,6 +1,6 @@
 import pygame as pg
 import pygame_menu as pgm
-from Game import Game_handler as gh
+from game import Game_handler as gh
 
 
 def draw_menus():

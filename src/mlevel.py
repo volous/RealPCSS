@@ -1,5 +1,5 @@
 import numpy as np
-from Tile import Tile
+from tile import Tile
 
 
 class Level:

@@ -1,5 +1,5 @@
 import pygame as pg
-from Bomb import Bomb
+from bomb import Bomb
 
 
 class Character:
