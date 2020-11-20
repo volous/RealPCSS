@@ -7,10 +7,6 @@ class Character:
     def __init__(self, max_bombs, PLAYER_ID, index_x, index_y, screen, player_color, up, down, left, right, place_bomb):
         # initializing variables
         self.place_bomb = place_bomb
-        self.right = right
-        self.left = left
-        self.down = down
-        self.up = up
         self.bomb_count = 0
         self.max_bombs = max_bombs
         self.PLAYER_ID = PLAYER_ID
