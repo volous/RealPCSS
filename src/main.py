@@ -9,8 +9,8 @@ import const
 from server import Server
 import multiprocessing as mp
 
-def start_game(up, down, left, right, plant_bomb):
 
+def start_game(up, down, left, right, plant_bomb):
     # initialize pygame
     pg.init()
     surface = const.surface
@@ -21,26 +21,46 @@ def start_game(up, down, left, right, plant_bomb):
     pg.display.set_icon(icon)
 
     # init menus
-    mainMenu = pgm.Menu(width=const.width, height=const.height, title="Welcome", enabled=True, theme=pgm.themes.THEME_SOLARIZED)
-    itemShopMenu = pgm.Menu(width=const.width, height=const.height, title="Item Shop", enabled=True, theme=pgm.themes.THEME_SOLARIZED)
-    settingsMenu = pgm.Menu(width=const.width, height=const.height, title="Settings", enabled=True, theme=pgm.themes.THEME_SOLARIZED)
-    quitMenu = pgm.Menu(width=const.width, height=const.height, title="Are you sure?", enabled=True, theme=pgm.themes.THEME_SOLARIZED)
+    welcomeMenu = pgm.Menu(width=const.width, height=const.height, title="Bomberman Spin-off Game", enabled=True,
+                           theme=pgm.themes.THEME_SOLARIZED)
+    mainMenu = pgm.Menu(width=const.width, height=const.height, title="Welcome", enabled=True,
+                        theme=pgm.themes.THEME_SOLARIZED)
+    itemShopMenu = pgm.Menu(width=const.width, height=const.height, title="Item Shop", enabled=True,
+                            theme=pgm.themes.THEME_SOLARIZED)
+    settingsMenu = pgm.Menu(width=const.width, height=const.height, title="Settings", enabled=True,
+                            theme=pgm.themes.THEME_SOLARIZED)
+    quitMenu = pgm.Menu(width=const.width, height=const.height, title="Are you sure?", enabled=True,
+                        theme=pgm.themes.THEME_SOLARIZED)
 
-    imgPath = "res/img.jpg"
-    mainMenu.add_image(imgPath)
+    fs1 = 40
+    fs2 = 50
 
-    # Get text input value using: print("Hi " + widget1.get_value() + "!")
+    w_widget1 = welcomeMenu.add_image("res/title_img.png")
+    w_widget2 = welcomeMenu.add_label("Please enter your avatar name:", font_size=fs2)
+    w_widget3 = welcomeMenu.add_text_input("Name: ", default="", font_size=fs1)
+    w_widget4 = welcomeMenu.add_button("Go to main menu", mainMenu, font_size=fs1)
 
-    m_widget1 = mainMenu.add_text_input("Name: ", default="")
-    m_widget2 = mainMenu.add_button("Play", mainMenu.disable)
-    m_widget3 = mainMenu.add_button("Item Shop", itemShopMenu)
-    m_widget4 = mainMenu.add_button("Settings", settingsMenu)
-    m_widget5 = mainMenu.add_button("Quit", quitMenu)
+    m_spacing = 20
+    m_widget2 = mainMenu.add_button("Play", welcomeMenu.disable, font_size=fs2)
+    mainMenu.add_vertical_margin(m_spacing)
+    m_widget3 = mainMenu.add_button("Item Shop", itemShopMenu, font_size=fs2)
+    mainMenu.add_vertical_margin(m_spacing)
+    m_widget4 = mainMenu.add_button("Settings", settingsMenu, font_size=fs2)
+    mainMenu.add_vertical_margin(m_spacing)
+    m_widget5 = mainMenu.add_button("Change avatar name", pgm.events.RESET, font_size=fs2)
+    mainMenu.add_vertical_margin(m_spacing)
+    m_widget6 = mainMenu.add_button("Quit", quitMenu, font_size=fs2)
 
-    i_widget1 = itemShopMenu.add_button("Go back", pgm.events.BACK)
-    s_widget1 = settingsMenu.add_button("Go back", pgm.events.BACK)
-    q_widget1 = quitMenu.add_button("Yes", pgm.events.EXIT)
-    q_widget2 = quitMenu.add_button("No", pgm.events.BACK)
+    i_widget1 = itemShopMenu.add_label("Not yet implemented", font_size=fs2)
+    itemShopMenu.add_vertical_margin(25)
+    i_widget2 = itemShopMenu.add_button("Go back", pgm.events.BACK, font_size=fs2)
+
+    i_widget1 = settingsMenu.add_label("Not yet implemented", font_size=fs2)
+    settingsMenu.add_vertical_margin(25)
+    s_widget2 = settingsMenu.add_button("Go back", pgm.events.BACK, font_size=fs2)
+
+    q_widget1 = quitMenu.add_button("Yes", pgm.events.EXIT, font_size=fs2)
+    q_widget2 = quitMenu.add_button("No", pgm.events.BACK, font_size=fs2)
 
     game = gh(surface, client, up, down, left, right, plant_bomb)
     run_once = True
@@ -59,9 +79,9 @@ def start_game(up, down, left, right, plant_bomb):
                 client.send(ACTION=const.CLIENT_QUIT)
                 break
 
-        if mainMenu.is_enabled():
-            mainMenu.draw(const.surface)
-            mainMenu.update(events)
+        if welcomeMenu.is_enabled():
+            welcomeMenu.draw(const.surface)
+            welcomeMenu.update(events)
 
         if not mainMenu.is_enabled():
             if run_once:
@@ -75,6 +95,7 @@ def start_game(up, down, left, right, plant_bomb):
 
         # updates the display of the pygame window
         pg.display.update()
+
 
 if __name__ == "__main__":
     server = Server()
