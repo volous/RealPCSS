@@ -17,7 +17,6 @@ class Game_handler:
         self.screen = screen
         self.client = client
         # an empty array that tracks bombs and their explosions
-        self.bombs = []
         self.up = up
         self.down = down
         self.left = left
@@ -28,7 +27,7 @@ class Game_handler:
         self.client.level.draw()
         for c in self.client.characters:
             c.draw()
-        for b in self.bombs:
+        for b in self.client.bombs:
             b.draw(time.time())
 
         # self.actions()

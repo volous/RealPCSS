@@ -41,11 +41,14 @@ class Character:
 
     # method that handles how many bombs the player(s) are allowed to place,
     # as long as bombs placed are lower than max_bombs
-    def bomb_handler(self, x, y):
+    def bomb_handler(self):
+        print("trying to plant bomb")
         if self.bomb_count < self.max_bombs:
+            print("succeeded")
             return Bomb(self.PLAYER_ID, self.explRad, True, True, self.screen,
-                        x, y, self.player_color)
-
+                        self.index_x, self.index_y, self.player_color)
+        else:
+            return None
     # method that handles player actions such as movement, and bomb placement.
     # checks which key has been pressed and if the tile they are trying to move into is walkable
     # def player_actions(self, can_place, tiles):

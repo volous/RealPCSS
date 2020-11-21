@@ -37,8 +37,6 @@ class Bubblesort:
                 break
 
 
-
-
 test = Bubblesort()
 test.makeArray()
 test.bubble()

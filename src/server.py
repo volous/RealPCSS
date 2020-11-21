@@ -1,11 +1,11 @@
 import socket
+import time
 from _thread import *
 import pickle
-
 from character import Character
 import const
-import pygame as pg
 from mlevel import Level
+
 
 class Server:
     def __init__(self):
@@ -17,20 +17,41 @@ class Server:
         self.clients = []
         self.characters = [Character(3, const.PLAYER_ONE_ID, 1, 1, None, (255, 0, 0)),
                            Character(3, const.PLAYER_TWO_ID, 13, 1, None, (0, 255, 0))]
+        self.bombs = []
+        self.ready_clients = 0
         self.level = Level(None)
         self.active = True
-        self.connectThread = start_new_thread(self.threaded_client,())
+        self.connectThread = start_new_thread(self.make_connections, ())
+        self.bombThread = start_new_thread(self.bomb_manager, ())
 
-    def threaded_client(self):
+    def bomb_manager(self):
         while self.active:
-            clientid = 0
+            curr_time = time.time()
+            if self.bombs:
+                for b in self.bombs:
+                    if b.is_exploding(curr_time):
+                        self.characters[b.PLAYER_ID].bomb_count -= 1
+                        b.bomb_explode(self.level.tile_array)
+                        for c in self.characters:
+                            if c.check_death(b):
+                                self.respond_all(client_id=b.PLAYER_ID, ACTION=const.SERVER_KILL_PLAYER, data=c.PLAYER_ID)
+                        self.respond_all(client_id=b.PLAYER_ID, ACTION=const.SERVER_DESTROY_TILES, data=b.list)
+
+                        for index_x, index_y in b.list:
+                            self.level.tile_array[index_x, index_y].visible = False
+                            self.level.tile_array[index_x, index_y].walkable = True
+                self.bombs = [b for b in self.bombs if b.is_live]
+
+    def make_connections(self):
+        client_id = 0
+        while len(self.clients) < 2:
             connection, addr = self.socket.accept()
-            self.clients.append((connection, clientid))
-            start_new_thread(self.receive_from_client, (clientid, connection, addr))
-            clientid += 1
+            self.clients.append((connection, client_id))
+            start_new_thread(self.receive_from_client, (client_id, connection))
+            client_id += 1
 
 
-    def receive_from_client(self, client_id, connection, addr):
+    def receive_from_client(self, client_id, connection):
         while self.active:
             try:
                 received = connection.recv(2048*8)
@@ -40,41 +61,58 @@ class Server:
             except ConnectionResetError as e:
                 print(e)
                 continue
-            ACTION, data = pickle.loads(received)
-            self.update_gamestate(client_id, ACTION)
+            curr_client_id, ACTION, data = pickle.loads(received)
+            if curr_client_id is not None:
+                self.update_gamestate(curr_client_id, ACTION)
+            else:
+                self.update_gamestate(client_id, ACTION)
 
-    def respond(self, clientid, ACTION, data):
-        dump = pickle.dumps((clientid, ACTION, data))
+    def update_gamestate(self, client_id, ACTION):
+        if ACTION == const.CLIENT_CONNECT and self.ready_clients < 2:
+            self.respond_one(client_id, const.SERVER_GIVE_ID, client_id)
+            self.ready_clients += 1
+        if self.ready_clients == 2:
+            c_char = self.characters[client_id]
+            if ACTION == const.CLIENT_QUIT:
+                self.respond_all(client_id, const.SERVER_KILL_GAME)
+                self.active = False
+            elif ACTION == const.CLIENT_MOVE_DOWN:
+                if c_char.index_y < 14 and self.level.tile_array[c_char.index_x, c_char.index_y + 1].walkable:
+                    self.characters[client_id].index_y += 1
+                    response = [(c.index_x, c.index_y) for c in self.characters]
+                    self.respond_all(client_id, const.SERVER_UPDATE_POS, response)
+            elif ACTION == const.CLIENT_MOVE_UP:
+                if c_char.index_y > 0 and self.level.tile_array[c_char.index_x, c_char.index_y - 1].walkable:
+                    self.characters[client_id].index_y -= 1
+                    response = [(c.index_x, c.index_y) for c in self.characters]
+                    self.respond_all(client_id, const.SERVER_UPDATE_POS, response)
+            elif ACTION == const.CLIENT_MOVE_LEFT:
+                if c_char.index_x > 0 and self.level.tile_array[c_char.index_x - 1, c_char.index_y].walkable:
+                    self.characters[client_id].index_x -= 1
+                    response = [(c.index_x, c.index_y) for c in self.characters]
+                    self.respond_all(client_id, const.SERVER_UPDATE_POS, response)
+            elif ACTION == const.CLIENT_MOVE_RIGHT:
+                if c_char.index_x < 14 and self.level.tile_array[c_char.index_x + 1, c_char.index_y].walkable:
+                    self.characters[client_id].index_x += 1
+                    response = [(c.index_x, c.index_y) for c in self.characters]
+                    self.respond_all(client_id, const.SERVER_UPDATE_POS, response)
+            elif ACTION == const.CLIENT_PLANT_BOMB:
+                bomb = c_char.bomb_handler()
+                if bomb is not None:
+                    can_place = True
+                    for b in self.bombs:
+                        if b.index_x == bomb.index_x and b.index_y == bomb.index_y:
+                            can_place = False
+                    if can_place:
+                        c_char.bomb_count += 1
+                        self.bombs.append(bomb)
+                        self.respond_all(client_id, const.SERVER_PLANT_BOMB, bomb)
+
+    def respond_all(self, client_id, ACTION, data=None):
+        dump = pickle.dumps((client_id, ACTION, data))
         for c, _ in self.clients:
             c.send(dump)
 
-    def update_gamestate(self, client_id, ACTION):
-        print(f"updating gamestate for {client_id}")
-        c_char = self.characters[client_id]
-        if ACTION == const.CLIENT_MOVE_DOWN:
-            print("move down requested")
-            if c_char.index_y < 14 and self.level.tile_array[c_char.index_x, c_char.index_y + 1].walkable:
-                print("move down granted")
-
-                self.characters[client_id].index_y += 1
-                response = [(c.index_x, c.index_y) for c in self.characters]
-                self.respond(client_id, const.SERVER_UPDATE_POS, response)
-        elif ACTION == const.CLIENT_MOVE_UP:
-            if c_char.index_y > 0 and self.level.tile_array[c_char.index_x, c_char.index_y - 1].walkable:
-                self.characters[client_id].index_y -= 1
-                response = [(c.index_x, c.index_y) for c in self.characters]
-                self.respond(client_id, const.SERVER_UPDATE_POS, response)
-        elif ACTION == const.CLIENT_MOVE_LEFT:
-            if c_char.index_x > 0 and self.level.tile_array[c_char.index_x - 1, c_char.index_y].walkable:
-                self.characters[client_id].index_x -= 1
-                response = [(c.index_x, c.index_y) for c in self.characters]
-                self.respond(client_id, const.SERVER_UPDATE_POS, response)
-        elif ACTION == const.CLIENT_MOVE_RIGHT:
-            if c_char.index_x < 14 and self.level.tile_array[c_char.index_x + 1, c_char.index_y].walkable:
-                self.characters[client_id].index_x += 1
-                response = [(c.index_x, c.index_y) for c in self.characters]
-                self.respond(client_id, const.SERVER_UPDATE_POS, response)
-        # elif ACTION == const.CLIENT_PLANT_BOMB:
-        #     pass
-
-
+    def respond_one(self, client_id, ACTION, data=None):
+        dump = pickle.dumps((client_id, ACTION, data))
+        self.clients[client_id][0].send(dump)

@@ -1,3 +1,4 @@
+import sys
 import time
 
 import pygame as pg
@@ -12,9 +13,8 @@ def start_game(up, down, left, right, plant_bomb):
 
     # initialize pygame
     pg.init()
-    time.sleep(1)
-    client = Client()
-    time.sleep(1)
+    surface = const.surface
+    client = Client(surface)
     # Set caption and icon
     pg.display.set_caption("Bomberman Spin-off Game")
     icon = pg.image.load('res/bomb3.png')
@@ -42,11 +42,12 @@ def start_game(up, down, left, right, plant_bomb):
     q_widget1 = quitMenu.add_button("Yes", pgm.events.EXIT)
     q_widget2 = quitMenu.add_button("No", pgm.events.BACK)
 
-    game = gh(const.surface, client, up, down, left, right, plant_bomb)
+    game = gh(surface, client, up, down, left, right, plant_bomb)
+    run_once = True
 
     # boolean variable that keeps the while loop running
     running = True
-    while running:
+    while client.game_active:
         # delay so the game is slower
         pg.time.wait(100)
 
@@ -55,13 +56,17 @@ def start_game(up, down, left, right, plant_bomb):
         for event in events:
             # if the window closes, it gets closed properly
             if event.type == pg.QUIT:
-                running = False
+                client.send(ACTION=const.CLIENT_QUIT)
+                break
 
         if mainMenu.is_enabled():
             mainMenu.draw(const.surface)
             mainMenu.update(events)
 
         if not mainMenu.is_enabled():
+            if run_once:
+                client.send(ACTION=const.CLIENT_CONNECT)
+                run_once = False
             mainMenu.disable()
             const.surface.fill((0, 0, 0))
             game.move()
@@ -71,9 +76,8 @@ def start_game(up, down, left, right, plant_bomb):
         # updates the display of the pygame window
         pg.display.update()
 
-
 if __name__ == "__main__":
     server = Server()
-    game1 = mp.Process(target=start_game, args=(pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE))
-    game1.start()
+    game2 = mp.Process(target=start_game, args=(pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE))
+    game2.start()
     start_game(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_p)
