@@ -1,6 +1,6 @@
 import time
 import pygame as pg
-import player_id
+import const
 
 class Bomb:
     def __init__(self, PLAYER_ID, explRad, bState, bReload, screen, index_x, index_y, color):
@@ -19,7 +19,7 @@ class Bomb:
         self.list = []
 
     # method to drawing bombs, also keeps track of when the bomb should explode
-    def draw_bomb(self, secs):
+    def draw(self, secs):
         boom = int(secs - self.sec)
         if boom == self.time_max:
             self.placed = False

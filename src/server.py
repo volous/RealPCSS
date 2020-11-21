@@ -3,73 +3,78 @@ from _thread import *
 import pickle
 
 from character import Character
-import player_id
+import const
 import pygame as pg
 from mlevel import Level
 
+class Server:
+    def __init__(self):
+        self.port = 5555
+        self.addr = (socket.gethostbyname(socket.gethostname()))
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.bind((self.addr, self.port))
+        self.socket.listen(2)
+        self.clients = []
+        self.characters = [Character(3, const.PLAYER_ONE_ID, 1, 1, None, (255, 0, 0)),
+                           Character(3, const.PLAYER_TWO_ID, 13, 1, None, (0, 255, 0))]
+        self.level = Level(None)
+        self.active = True
+        self.connectThread = start_new_thread(self.threaded_client,())
 
-server = (socket.gethostbyname(socket.gethostname()))
-port = 5555
-l = Level(player_id.surface)
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-try:
-    s.bind((server, port))
-except socket.error as e:
-    str(e)
-
-characters = [Character(3, player_id.PLAYER_ONE_ID, 1, 1, player_id.surface, (255, 0, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE),
-              Character(3, player_id.PLAYER_TWO_ID, 13, 1, player_id.surface, (0, 255, 0), pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE)]
-levels = [Level(player_id.surface)]
-# amount of clients to connect to the server
-s.listen(4)
-print("Server started on: ", server)
-print("Waiting for connection")
-
-
-def threaded_client(conn, character, level):
-    conn.send(pickle.dumps(characters[character]))
-    conn.send(pickle.dumps(levels[level]))
-    reply = ""
-    while True:
-        try:
-            data = pickle.loads(conn.recv(2048))
-            data2 = pickle.loads(conn.recv(2048))
-            characters[character] = data
-            levels[level] = data2
-            if not data:
-                print("Disconnected")
-                break
-            else:
-                if characters == 1:
-                    reply = characters[0]
-                else:
-                    reply = characters[1]
-
-                print("Received: ", data)
-                print("Sending : ", reply)
-
-            if not data2:
-                print("Disconnected")
-                break
-            else:
-                if levels == 1:
-                    reply = levels[0]
-                print("Received: ", data2)
-                print("Sending: ", reply)
-
-            conn.sendall(pickle.dumps(reply))
-        except:
-            break
-
-    print("Lost connection")
-    conn.close()
+    def threaded_client(self):
+        while self.active:
+            clientid = 0
+            connection, addr = self.socket.accept()
+            self.clients.append((connection, clientid))
+            start_new_thread(self.receive_from_client, (clientid, connection, addr))
+            clientid += 1
 
 
-currentPlayer = 0
-while True:
-    conn, address = s.accept()
-    print("Connected to:", address)
+    def receive_from_client(self, client_id, connection, addr):
+        while self.active:
+            try:
+                received = connection.recv(2048*8)
+            except ConnectionAbortedError as e:
+                print(e)
+                continue
+            except ConnectionResetError as e:
+                print(e)
+                continue
+            ACTION, data = pickle.loads(received)
+            self.update_gamestate(client_id, ACTION)
 
-    start_new_thread(threaded_client, (conn, currentPlayer))
-    currentPlayer += 1
+    def respond(self, clientid, ACTION, data):
+        dump = pickle.dumps((clientid, ACTION, data))
+        for c, _ in self.clients:
+            c.send(dump)
+
+    def update_gamestate(self, client_id, ACTION):
+        print(f"updating gamestate for {client_id}")
+        c_char = self.characters[client_id]
+        if ACTION == const.CLIENT_MOVE_DOWN:
+            print("move down requested")
+            if c_char.index_y < 14 and self.level.tile_array[c_char.index_x, c_char.index_y + 1].walkable:
+                print("move down granted")
+
+                self.characters[client_id].index_y += 1
+                response = [(c.index_x, c.index_y) for c in self.characters]
+                self.respond(client_id, const.SERVER_UPDATE_POS, response)
+        elif ACTION == const.CLIENT_MOVE_UP:
+            if c_char.index_y > 0 and self.level.tile_array[c_char.index_x, c_char.index_y - 1].walkable:
+                self.characters[client_id].index_y -= 1
+                response = [(c.index_x, c.index_y) for c in self.characters]
+                self.respond(client_id, const.SERVER_UPDATE_POS, response)
+        elif ACTION == const.CLIENT_MOVE_LEFT:
+            if c_char.index_x > 0 and self.level.tile_array[c_char.index_x - 1, c_char.index_y].walkable:
+                self.characters[client_id].index_x -= 1
+                response = [(c.index_x, c.index_y) for c in self.characters]
+                self.respond(client_id, const.SERVER_UPDATE_POS, response)
+        elif ACTION == const.CLIENT_MOVE_RIGHT:
+            if c_char.index_x < 14 and self.level.tile_array[c_char.index_x + 1, c_char.index_y].walkable:
+                self.characters[client_id].index_x += 1
+                response = [(c.index_x, c.index_y) for c in self.characters]
+                self.respond(client_id, const.SERVER_UPDATE_POS, response)
+        # elif ACTION == const.CLIENT_PLANT_BOMB:
+        #     pass
+
+
