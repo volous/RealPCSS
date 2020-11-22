@@ -9,7 +9,7 @@ class Bubblesort:
 
     # importing random numbers to array 100 times
     def makeArray(self):
-        for _ in range(10):
+        for _ in range(100):
             randint = random.randint(0, 30)
             self.array.append(randint)
         print(self.array)
@@ -49,7 +49,7 @@ for i in range(len(bub.array)):
     llist.push(bub.array[i])
 # inside of this if statement a number can be inserted that is between 0 and 30 and there will be a search performed
 if llist.search(int(search)):
-    print("yes")
+    print(search, "is in list")
 else:
-    print("no")
+    print(search, "is not in list")
 
