@@ -20,7 +20,7 @@ def start_game(up, down, left, right, plant_bomb):
 
     # Set surface caption and icon
     pg.display.set_caption("Bomberman Spin-off Game")
-    icon = pg.image.load('res/bomb3.png')
+    icon = pg.image.load('Res/bomb_icon.png')
     pg.display.set_icon(icon)
 
     # create menus via pygame_menu (pgm) library with properties
