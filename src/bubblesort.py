@@ -2,8 +2,7 @@ import random
 from node import Node, LinkedList
 
 
-class Bubblesort:
-
+class BubbleSort:
     def __init__(self):
         self.array = []
 
@@ -14,13 +13,12 @@ class Bubblesort:
             self.array.append(randint)
         print(self.array)
 
-    # Bubblesort algorithm
+    # bubble sort algorithm
     def bubble(self):
         # n is defined as the length of makeArray()
         n = len(self.array)
 
         for i in range(n):
-
             # boolean if index has changed
             changeIndex = False
 
@@ -39,7 +37,7 @@ class Bubblesort:
 
 
 # run this to bubble sort random numbers, the values randomly generated will then be inserted into a LinkedList
-bub = Bubblesort()
+bub = BubbleSort()
 bub.makeArray()
 bub.bubble()
 print(bub.array)
@@ -52,4 +50,3 @@ if llist.search(int(search)):
     print(search, "is in list")
 else:
     print(search, "is not in list")
-

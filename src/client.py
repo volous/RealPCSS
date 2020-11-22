@@ -4,13 +4,12 @@ import time
 from _thread import start_new_thread
 import const
 from character import Character
-from mlevel import Level
+from level import Level
 import pygame as pg
 
 
 class Client:
     def __init__(self, surface):
-        # initializing variables and lists
         self.alive_player = 2
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server = (socket.gethostbyname(socket.gethostname()))

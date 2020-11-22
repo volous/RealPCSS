@@ -3,9 +3,7 @@ from tile import Tile
 
 
 class Level:
-
     def __init__(self, screen):
-        # Initialize variables
         self.screen = screen
         self.tile_array = np.ndarray((15, 15), dtype=Tile)
         self.white = (255, 255, 255)

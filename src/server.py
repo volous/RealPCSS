@@ -4,12 +4,11 @@ from _thread import *
 import pickle
 from character import Character
 import const
-from mlevel import Level
+from level import Level
 
 
 class Server:
     def __init__(self):
-        # initializing variables and lists
         self.multiplier = 8
         self.port = 5555
         self.addr = (socket.gethostbyname(socket.gethostname()))

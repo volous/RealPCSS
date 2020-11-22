@@ -3,12 +3,10 @@ import pygame as pg
 import time
 
 
-class Game_handler:
+class GameHandler:
     def __init__(self, screen, client, up, down, left, right, plant_bomb):
-        # Initialize level, characters
         self.screen = screen
         self.client = client
-        # an empty array that tracks bombs and their explosions
         self.up = up
         self.down = down
         self.left = left

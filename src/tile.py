@@ -1,8 +1,7 @@
 import pygame as pg
 
 
-class Tile():
-
+class Tile:
     def __init__(self, screen, color, walkable, explodable, visible, index_x, index_y):
         self.screen = screen
         self.color = color

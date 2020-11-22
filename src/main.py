@@ -1,10 +1,11 @@
 import pygame as pg
 import pygame_menu as pgm
-from game import Game_handler as gh
+from game import GameHandler as gh
 from client import Client
 import const
 from server import Server
 import multiprocessing as mp
+
 
 # method for starting game, passing player controls as args
 def start_game(up, down, left, right, plant_bomb):
@@ -53,11 +54,14 @@ def start_game(up, down, left, right, plant_bomb):
 
     # disable the welcome menu (highest in menu hierarchy) if the play button is pressed
     mainMenu.add_button("Play", welcomeMenu.disable, font_size=fs2)
+
     mainMenu.add_vertical_margin(spacing)
     mainMenu.add_button("Item Shop", itemShopMenu, font_size=fs2)
     mainMenu.add_vertical_margin(spacing)
     mainMenu.add_button("Settings", settingsMenu, font_size=fs2)
     mainMenu.add_vertical_margin(spacing)
+
+    # navigate to upper level hierarchy menu (welcome menu)
     mainMenu.add_button("Change avatar name", pgm.events.RESET, font_size=fs2)
     mainMenu.add_vertical_margin(spacing)
     mainMenu.add_button("Quit", quitMenu, font_size=fs2)

@@ -1,9 +1,9 @@
 import time
 import pygame as pg
 
+
 class Bomb:
     def __init__(self, PLAYER_ID, explRad, bState, bReload, screen, index_x, index_y, color):
-        # initializing variables and lists for the bomb class
         self.PLAYER_ID = PLAYER_ID
         self.explRad = explRad
         self.bState = bState
@@ -17,16 +17,16 @@ class Bomb:
         self.color = color
         self.list = []
 
+    # method for handling bomb explosion
     def is_exploding(self, curr_time):
         boom = int(curr_time - self.plant_time)
         if boom >= self.time_max:
             self.is_live = False
             return True
-
         else:
             return False
 
-    # method to drawing bombs, also keeps track of when the bomb should explode
+    # method for drawing bombs, also keeps track of when the bomb should explode
     def draw(self, curr_time):
         boom = int(curr_time - self.plant_time)
         if boom == self.time_max:
@@ -39,14 +39,16 @@ class Bomb:
             text = font.render(str(boom), True, (255, 255, 255), self.color)
             self.screen.blit(text, (self.index_x * 32 + 217 + 8, self.index_y * 32 + 117 + 8))
 
+    # methods for handling bomb explosion in client
     def bomb_explode_client(self, explosion_list):
         for index_x, index_y in explosion_list:
             pg.draw.circle(self.screen, self.color, (index_x * 32 + 217 + 16,
                                                      index_y * 32 + 117 + 16), 16, 0)
+
     # method for the explosion of the bombs
     def bomb_explode(self, tile_array):
         self.list = [(self.index_x, self.index_y)]
-        for i in range(1, self.explRad+1):
+        for i in range(1, self.explRad + 1):
             # if the tile is walkable the bomb is allowed to explode further
             if tile_array[self.index_x + i, self.index_y].walkable:
                 # appends the index's of a bombs explosion to a list
@@ -61,7 +63,7 @@ class Bomb:
                 break
             else:
                 break
-        for i in range(1, self.explRad+1):
+        for i in range(1, self.explRad + 1):
             # if the tile is walkable the bomb is allowed to explode further
             if tile_array[self.index_x - i, self.index_y].walkable:
                 # appends the index's of a bombs explosion to a list
@@ -76,7 +78,7 @@ class Bomb:
                 break
             else:
                 break
-        for i in range(1, self.explRad+1):
+        for i in range(1, self.explRad + 1):
             # if the tile is walkable the bomb is allowed to explode further
             if tile_array[self.index_x, self.index_y + i].walkable:
                 # appends the index's of a bombs explosion to a list
@@ -91,7 +93,7 @@ class Bomb:
                 break
             else:
                 break
-        for i in range(1, self.explRad+1):
+        for i in range(1, self.explRad + 1):
             # if the tile is walkable the bomb is allowed to explode further
             if tile_array[self.index_x, self.index_y - i].walkable:
                 # appends the index's of a bombs explosion to a list
