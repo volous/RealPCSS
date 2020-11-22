@@ -6,7 +6,6 @@ import const
 from server import Server
 import multiprocessing as mp
 
-
 def start_game(up, down, left, right, plant_bomb):
     # initialize pygame
     pg.init()
@@ -59,6 +58,7 @@ def start_game(up, down, left, right, plant_bomb):
 
     q_widget1 = quitMenu.add_button("Yes", pgm.events.EXIT, font_size=fs2)
     q_widget2 = quitMenu.add_button("No", pgm.events.BACK, font_size=fs2)
+
 
     game = gh(surface, client, up, down, left, right, plant_bomb)
     run_once = True

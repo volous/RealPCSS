@@ -25,11 +25,3 @@ class LinkedList:
                 return True
             current = current.next
         return False
-
-    def listToLinkedList(self, list):
-        self.list = list
-        assert len(self.list) > 0
-        if len(self.list) == 1:
-            return LinkedList(list[0])
-        else:
-            return LinkedList(list[0], self.listToLinkedList(list[1:]))

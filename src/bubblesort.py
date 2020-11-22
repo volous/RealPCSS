@@ -43,12 +43,12 @@ bub = Bubblesort()
 bub.makeArray()
 bub.bubble()
 print(bub.array)
+search = input("input number you wish to search for: ")
 llist = LinkedList(bub.array)
 for i in range(len(bub.array)):
     llist.push(bub.array[i])
-# inside of this if statement a number can be insterted that is between 0 and 30 and there will be a search performed
-# whether or not the number is inside of that LinkedList
-if llist.search(30):
+# inside of this if statement a number can be inserted that is between 0 and 30 and there will be a search performed
+if llist.search(int(search)):
     print("yes")
 else:
     print("no")

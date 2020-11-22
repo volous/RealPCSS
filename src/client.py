@@ -1,6 +1,5 @@
 import socket
 import pickle
-import sys
 import time
 from _thread import start_new_thread
 import const
@@ -8,8 +7,10 @@ from character import Character
 from mlevel import Level
 import pygame as pg
 
+
 class Client:
     def __init__(self, surface):
+        self.alive_player = 2
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server = (socket.gethostbyname(socket.gethostname()))
         self.port = 5555
@@ -46,7 +47,6 @@ class Client:
         elif ACTION == const.SERVER_KILL_PLAYER:
             self.characters[data].alive = False
                 # Do stuff with player death
-
             self.game_active = False
 
         elif ACTION == const.SERVER_UPDATE_POS:
