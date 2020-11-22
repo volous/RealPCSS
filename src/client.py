@@ -46,6 +46,7 @@ class Client:
         elif ACTION == const.SERVER_KILL_PLAYER:
             self.characters[data].alive = False
                 # Do stuff with player death
+
             self.game_active = False
 
         elif ACTION == const.SERVER_UPDATE_POS:

@@ -11,8 +11,6 @@ def start_game(up, down, left, right, plant_bomb):
     # initialize pygame
     pg.init()
 
-
-
     surface = const.surface
     client = Client(surface)
     # Set caption and icon
@@ -103,3 +101,4 @@ if __name__ == "__main__":
     game2 = mp.Process(target=start_game, args=(pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE))
     game2.start()
     start_game(pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT, pg.K_p)
+
