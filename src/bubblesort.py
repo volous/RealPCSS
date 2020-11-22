@@ -1,4 +1,5 @@
 import random
+from node import Node, LinkedList
 
 
 class Bubblesort:
@@ -8,7 +9,7 @@ class Bubblesort:
 
     # importing random numbers to array 100 times
     def makeArray(self):
-        for _ in range(10000):
+        for _ in range(10):
             randint = random.randint(0, 30)
             self.array.append(randint)
         print(self.array)
@@ -37,7 +38,18 @@ class Bubblesort:
                 break
 
 
-test = Bubblesort()
-test.makeArray()
-test.bubble()
-print(test.array)
+# run this to bubble sort random numbers, the values randomly generated will then be inserted into a LinkedList
+bub = Bubblesort()
+bub.makeArray()
+bub.bubble()
+print(bub.array)
+llist = LinkedList(bub.array)
+for i in range(len(bub.array)):
+    llist.push(bub.array[i])
+# inside of this if statement a number can be insterted that is between 0 and 30 and there will be a search performed
+# whether or not the number is inside of that LinkedList
+if llist.search(30):
+    print("yes")
+else:
+    print("no")
+

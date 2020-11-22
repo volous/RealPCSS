@@ -43,10 +43,11 @@ class Client:
             self.client_id = data
         elif ACTION == const.SERVER_KILL_GAME:
             self.game_active = False
-
         elif ACTION == const.SERVER_KILL_PLAYER:
             self.characters[data].alive = False
-            # Do stuff with player death
+                # Do stuff with player death
+            self.game_active = False
+
         elif ACTION == const.SERVER_UPDATE_POS:
             for c, updated_c in zip(self.characters, data):
                 c.index_x = updated_c[0]
@@ -62,7 +63,3 @@ class Client:
                                (index_x * 32 + 217 + 16, index_y * 32 + 117 + 16), 16, 0)
                 self.level.tile_array[index_x, index_y].visible = False
                 self.level.tile_array[index_x, index_y].walkable = True
-        # if ACTION == const.SERVER_PLANT_BOMB:
-        #     player_id = data[0]
-        #     bomb_index = data[1]
-        #     self.characters[player_id].bomb_handler()

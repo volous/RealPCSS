@@ -9,6 +9,7 @@ from mlevel import Level
 
 class Server:
     def __init__(self):
+        self.multiplier = 8
         self.port = 5555
         self.addr = (socket.gethostbyname(socket.gethostname()))
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

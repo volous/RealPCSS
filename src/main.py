@@ -1,6 +1,3 @@
-import sys
-import time
-
 import pygame as pg
 import pygame_menu as pgm
 from game import Game_handler as gh
@@ -13,6 +10,9 @@ import multiprocessing as mp
 def start_game(up, down, left, right, plant_bomb):
     # initialize pygame
     pg.init()
+
+
+
     surface = const.surface
     client = Client(surface)
     # Set caption and icon
@@ -98,6 +98,7 @@ def start_game(up, down, left, right, plant_bomb):
 
 
 if __name__ == "__main__":
+
     server = Server()
     game2 = mp.Process(target=start_game, args=(pg.K_w, pg.K_s, pg.K_a, pg.K_d, pg.K_SPACE))
     game2.start()
