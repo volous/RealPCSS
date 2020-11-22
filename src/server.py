@@ -9,6 +9,7 @@ from mlevel import Level
 
 class Server:
     def __init__(self):
+        # initializing variables and lists
         self.multiplier = 8
         self.port = 5555
         self.addr = (socket.gethostbyname(socket.gethostname()))
@@ -25,6 +26,7 @@ class Server:
         self.connectThread = start_new_thread(self.make_connections, ())
         self.bombThread = start_new_thread(self.bomb_manager, ())
 
+    # method to manage the bombs placement and when they are exploding
     def bomb_manager(self):
         while self.active:
             curr_time = time.time()
@@ -37,12 +39,13 @@ class Server:
                             if c.check_death(b):
                                 self.respond_all(client_id=b.PLAYER_ID, ACTION=const.SERVER_KILL_PLAYER, data=c.PLAYER_ID)
                         self.respond_all(client_id=b.PLAYER_ID, ACTION=const.SERVER_DESTROY_TILES, data=b.list)
-
+                        # if the tile is bombed and it is explodable, the tile will become walkable, and no longer visible
                         for index_x, index_y in b.list:
                             self.level.tile_array[index_x, index_y].visible = False
                             self.level.tile_array[index_x, index_y].walkable = True
                 self.bombs = [b for b in self.bombs if b.is_live]
 
+    # method that connects the players
     def make_connections(self):
         client_id = 0
         while len(self.clients) < 2:
@@ -51,7 +54,7 @@ class Server:
             start_new_thread(self.receive_from_client, (client_id, connection))
             client_id += 1
 
-
+    # method that receives from the client
     def receive_from_client(self, client_id, connection):
         while self.active:
             try:
@@ -67,7 +70,7 @@ class Server:
                 self.update_gamestate(curr_client_id, ACTION)
             else:
                 self.update_gamestate(client_id, ACTION)
-
+    # method that updates the gamestates
     def update_gamestate(self, client_id, ACTION):
         if ACTION == const.CLIENT_CONNECT and self.ready_clients < 2:
             self.respond_one(client_id, const.SERVER_GIVE_ID, client_id)
@@ -108,12 +111,12 @@ class Server:
                         c_char.bomb_count += 1
                         self.bombs.append(bomb)
                         self.respond_all(client_id, const.SERVER_PLANT_BOMB, bomb)
-
+    # method that responds to all
     def respond_all(self, client_id, ACTION, data=None):
         dump = pickle.dumps((client_id, ACTION, data))
         for c, _ in self.clients:
             c.send(dump)
-
+    # method that responds to one
     def respond_one(self, client_id, ACTION, data=None):
         dump = pickle.dumps((client_id, ACTION, data))
         self.clients[client_id][0].send(dump)
