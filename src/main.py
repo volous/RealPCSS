@@ -48,11 +48,11 @@ def start_game(up, down, left, right, plant_bomb):
     mainMenu.add_vertical_margin(m_spacing)
     m_widget6 = mainMenu.add_button("Quit", quitMenu, font_size=fs2)
 
-    i_widget1 = itemShopMenu.add_label("Not yet implemented", font_size=fs2)
+    i_widget1 = itemShopMenu.add_label("Not implemented", font_size=fs2)
     itemShopMenu.add_vertical_margin(25)
     i_widget2 = itemShopMenu.add_button("Go back", pgm.events.BACK, font_size=fs2)
 
-    i_widget1 = settingsMenu.add_label("Not yet implemented", font_size=fs2)
+    i_widget1 = settingsMenu.add_label("Not implemented", font_size=fs2)
     settingsMenu.add_vertical_margin(25)
     s_widget2 = settingsMenu.add_button("Go back", pgm.events.BACK, font_size=fs2)
 
