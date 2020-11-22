@@ -3,9 +3,7 @@ import pygame as pg
 import time
 
 
-
 class Game_handler:
-
     def __init__(self, screen, client, up, down, left, right, plant_bomb):
         # Initialize level, characters
         self.screen = screen
@@ -16,6 +14,7 @@ class Game_handler:
         self.left = left
         self.right = right
         self.plant_bomb = plant_bomb
+
     # method that draws the level and keeps track of the actions for the player and bombs
     def draw(self):
         self.client.level.draw()
@@ -23,8 +22,6 @@ class Game_handler:
             c.draw()
         for b in self.client.bombs:
             b.draw(time.time())
-
-
 
     def move(self):
         trigger = pg.key.get_pressed()
