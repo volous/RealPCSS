@@ -49,19 +49,3 @@ class Character:
                         self.index_x, self.index_y, self.player_color)
         else:
             return None
-    # method that handles player actions such as movement, and bomb placement.
-    # checks which key has been pressed and if the tile they are trying to move into is walkable
-    # def player_actions(self, can_place, tiles):
-    #     trigger = pg.key.get_pressed()
-    #     if trigger[self.up] and self.index_y > 0 and tiles[self.index_x, self.index_y - 1].walkable:
-    #         self.index_y -= 1
-    #     elif trigger[self.down] and self.index_y < 14 and tiles[self.index_x, self.index_y + 1].walkable:
-    #         self.index_y += 1
-    #     elif trigger[self.left] and self.index_x > 0 and tiles[self.index_x - 1, self.index_y].walkable:
-    #         self.index_x -= 1
-    #     elif trigger[self.right] and self.index_x < 14 and tiles[self.index_x + 1, self.index_y].walkable:
-    #         self.index_x += 1
-    #     elif trigger[self.place_bomb] and can_place:
-    #         return self.bomb_handler()
-    #     else:
-    #         return None

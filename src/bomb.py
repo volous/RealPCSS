@@ -1,6 +1,5 @@
 import time
 import pygame as pg
-import const
 
 class Bomb:
     def __init__(self, PLAYER_ID, explRad, bState, bReload, screen, index_x, index_y, color):
